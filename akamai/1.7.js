@@ -1435,10 +1435,28 @@ var _cf = _cf || [],
         bmak.startdoadma();
       }, 3e3), document.addEventListener ? (document.addEventListener("touchmove", bmak.htm, !0), document.addEventListener("touchstart", bmak.hts, !0), document.addEventListener("touchend", bmak.hte, !0), document.addEventListener("touchcancel", bmak.htc, !0), document.addEventListener("mousemove", bmak.hmm, !0), document.addEventListener("click", bmak.hc, !0), document.addEventListener("mousedown", bmak.hmd, !0), document.addEventListener("mouseup", bmak.hmu, !0), document.addEventListener("pointerdown", bmak.hpd, !0), document.addEventListener("pointerup", bmak.hpu, !0), document.addEventListener("keydown", bmak.hkd, !0), document.addEventListener("keyup", bmak.hku, !0), document.addEventListener("keypress", bmak.hkp, !0)) : document.attachEvent && (document.attachEvent("touchmove", bmak.htm), document.attachEvent("touchstart", bmak.hts), document.attachEvent("touchend", bmak.hte), document.attachEvent("touchcancel", bmak.htc), document.attachEvent("onmousemove", bmak.hmm), document.attachEvent("onclick", bmak.hc), document.attachEvent("onmousedown", bmak.hmd), document.attachEvent("onmouseup", bmak.hmu), document.attachEvent("onpointerdown", bmak.hpd), document.attachEvent("onpointerup", bmak.hpu), document.attachEvent("onkeydown", bmak.hkd), document.attachEvent("onkeyup", bmak.hku), document.attachEvent("onkeypress", bmak.hkp)), bmak.rve(), bmak.informinfo = bmak.getforminfo(), bmak.js_post && (bmak.aj_type = 0, bmak.bpd(), bmak.pd(!0)), bmak.firstLoad = !1;
     },
+    /*
+      Checks if a character is a part of the extended
+      ASCII code range. If it isn't return 0 otherwise
+      return the character code.
+
+      see: https://www.ascii-code.com/
+
+      t: String to check
+      a: Index of character you want to check
+    */
     gb: function(t, a) {
       var e = t.charCodeAt(a);
       return e = e > 255 ? 0 : e;
     },
+    /*
+      Base64 encode a string.
+
+      If the btoa function doesn't exist then it uses
+      its own.
+
+      see: https://developer.mozilla.org/en-US/docs/Web/API/btoa
+    */
     encode: function(t) {
       if ("undefined" != typeof btoa) return btoa(t);
 
