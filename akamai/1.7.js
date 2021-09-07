@@ -224,7 +224,18 @@ var _cf = _cf || [],
         b = -1;
       }
 
-      // parseInt start timestamp / (2016 ^ 2)
+      /*
+        parseInt(start timestamp / 4064256)
+        
+        Creates a rough estimate of the hour identifier for start timestamp(bmak.start_ts).
+
+        "dividing by 4064256 and parsing as an int gives you a number that should be constant for all valid sensor datas, 
+        but changes every ~hour (4064256ms is 67 minutes 44.256 seconds, 
+        not sure why this wouldnt be exactly 60 min but close enough i guess)"
+        - xssc
+
+        see: https://github.com/char/bpre/issues/1#issuecomment-914575546
+      */
       bmak.z1 = bmak.pi(bmak.start_ts / (bmak.y1 * bmak.y1));
       var d = Math.random(),
         s = bmak.pi(1e3 * d / 2),
@@ -395,7 +406,20 @@ var _cf = _cf || [],
       var b = "function" == typeof window.RTCPeerConnection || "function" == typeof window.mozRTCPeerConnection || "function" == typeof window.webkitRTCPeerConnection ? 1 : 0;
       t.push("wrc:" + b);
       var d = "mozInnerScreenY" in window ? window.mozInnerScreenY : 0;
-      t.push("isc:" + d), bmak.d2 = bmak.pi(bmak.z1 / 23);
+      t.push("isc:" + d);
+      /*
+        Rough day identifier for start timestamp(bmak.start_ts).
+
+        "d2 now divides by 23, which gives us, again roughly, 
+        a day marker, as diving the "hour marker" by 23, 
+        will result in a number that changes roughly every day 
+        (maybe this is 23 not 24 because our 7 extra minutes is 
+        now an extra 2.96608 hours in the timeframe)"
+        - xssc
+
+        see: https://github.com/char/bpre/issues/1#issuecomment-914575546
+      */
+      bmak.d2 = bmak.pi(bmak.z1 / 23);
       var s = "function" == typeof navigator.vibrate ? 1 : 0;
       t.push("vib:" + s);
       var k = "function" == typeof navigator.getBattery ? 1 : 0;
@@ -1295,6 +1319,15 @@ var _cf = _cf || [],
           l = k(80) + k(105) + k(90) + k(116) + k(69), // PiZtE
           u = bmak.jrs(bmak.start_ts),
           _ = bmak.get_cf_date() - bmak.start_ts,
+          /*
+            Week identifier for start timestamp(bmak.start_ts).
+
+            "this is the "week identifier", the number changes roughly once every week 
+            (maybe 6 because now the extra room in the timeframe is hour 17.79648 hours)"
+            - xssc
+
+            see: https://github.com/char/bpre/issues/1#issuecomment-914575546
+          */
           f = bmak.pi(bmak.d2 / 6),
           p = bmak.fas(),
           v = bmak.hbs(),
@@ -1422,6 +1455,14 @@ var _cf = _cf || [],
     rve: function() {
       void 0 !== document.hidden ? (bmak.hn = "hidden", bmak.vc = "visibilitychange") : void 0 !== document.mozHidden ? (bmak.hn = "mozHidden", bmak.vc = "mozvisibilitychange") : void 0 !== document.msHidden ? (bmak.hn = "msHidden", bmak.vc = "msvisibilitychange") : void 0 !== document.webkitHidden && (bmak.hn = "webkitHidden", bmak.vc = "webkitvisibilitychange"), document.addEventListener ? "unk" != bmak.hn && document.addEventListener(bmak.vc, bmak.hvc, !0) : document.attachEvent && "unk" != bmak.hn && document.attachEvent(bmak.vc, bmak.hvc), window.onblur = bmak.hb, window.onfocus = bmak.hf;
     },
+    /*
+      Start tracking device orientation and device motion
+      and then setup event listeners for other event
+      tracking (e.g: key tracking, mouse tracking)
+
+      This function calls the startdoadma function initially
+      and then on a 3 second interval.
+    */
     startTracking: function() {
       bmak.startdoadma();
 
@@ -1433,7 +1474,44 @@ var _cf = _cf || [],
 
       setInterval(function() {
         bmak.startdoadma();
-      }, 3e3), document.addEventListener ? (document.addEventListener("touchmove", bmak.htm, !0), document.addEventListener("touchstart", bmak.hts, !0), document.addEventListener("touchend", bmak.hte, !0), document.addEventListener("touchcancel", bmak.htc, !0), document.addEventListener("mousemove", bmak.hmm, !0), document.addEventListener("click", bmak.hc, !0), document.addEventListener("mousedown", bmak.hmd, !0), document.addEventListener("mouseup", bmak.hmu, !0), document.addEventListener("pointerdown", bmak.hpd, !0), document.addEventListener("pointerup", bmak.hpu, !0), document.addEventListener("keydown", bmak.hkd, !0), document.addEventListener("keyup", bmak.hku, !0), document.addEventListener("keypress", bmak.hkp, !0)) : document.attachEvent && (document.attachEvent("touchmove", bmak.htm), document.attachEvent("touchstart", bmak.hts), document.attachEvent("touchend", bmak.hte), document.attachEvent("touchcancel", bmak.htc), document.attachEvent("onmousemove", bmak.hmm), document.attachEvent("onclick", bmak.hc), document.attachEvent("onmousedown", bmak.hmd), document.attachEvent("onmouseup", bmak.hmu), document.attachEvent("onpointerdown", bmak.hpd), document.attachEvent("onpointerup", bmak.hpu), document.attachEvent("onkeydown", bmak.hkd), document.attachEvent("onkeyup", bmak.hku), document.attachEvent("onkeypress", bmak.hkp)), bmak.rve(), bmak.informinfo = bmak.getforminfo(), bmak.js_post && (bmak.aj_type = 0, bmak.bpd(), bmak.pd(!0)), bmak.firstLoad = !1;
+      }, 3e3);
+
+      if (document.addEventListener) {
+        document.addEventListener("touchmove", bmak.htm, !0);
+        document.addEventListener("touchstart", bmak.hts, !0);
+        document.addEventListener("touchend", bmak.hte, !0);
+        document.addEventListener("mousemove", bmak.hmm, !0);
+        document.addEventListener("click", bmak.hc, !0);
+        document.addEventListener("mousedown", bmak.hmd, !0);
+        document.addEventListener("mouseup", bmak.hmu, !0);
+        document.addEventListener("pointerdown", bmak.hpd, !0);
+        document.addEventListener("pointerup", bmak.hpu, !0);
+        document.addEventListener("keydown", bmak.hkd, !0);
+        document.addEventListener("keyup", bmak.hku, !0);
+        document.addEventListener("keypress", bmak.hkp, !0);
+      } else if (document.attachEvent) {
+        document.attachEvent("touchmove", bmak.htm);
+        document.attachEvent("touchstart", bmak.hts);
+        document.attachEvent("touchend", bmak.hte);
+        document.attachEvent("touchcancel", bmak.htc);
+        document.attachEvent("onmousemove", bmak.hmm);
+        document.attachEvent("onclick", bmak.hc);
+        document.attachEvent("onmousedown", bmak.hmd);
+        document.attachEvent("onmouseup", bmak.hmu);
+        document.attachEvent("onpointerdown", bmak.hpd);
+        document.attachEvent("onpointerup", bmak.hpu);
+        document.attachEvent("onkeydown", bmak.hkd);
+        document.attachEvent("onkeyup", bmak.hku);
+        document.attachEvent("onkeypress", bmak.hkp);
+      }
+      bmak.rve();
+      bmak.informinfo = bmak.getforminfo();
+      if (bmak.js_post) {
+        bmak.aj_type = 0;
+        bmak.bpd();
+        bmak.pd(!0);
+      }
+      bmak.firstLoad = !1;
     },
     /*
       Checks if a character is a part of the extended
