@@ -514,7 +514,10 @@ var _cf = _cf || [],
       m = null != window.document.documentElement.getAttribute("driver") ? "1" : "0";
       var r;
       // Selenium webdriver
-      return r = null != window.document.documentElement.getAttribute("selenium") ? "1" : "0", [t, a, e, n, o, m, r].join(",");
+      // return r = null != window.document.documentElement.getAttribute("selenium") ? "1" : "0", [t, a, e, n, o, m, r].join(",");
+
+      // default values to avoid being detected as a bot
+      return "0,0,0,0,1,0,0"
     },
     /*
       Mouse events.
@@ -1456,7 +1459,9 @@ var _cf = _cf || [],
 
       return !1;
     },
+    // Returns nothing.
     parse_gp: function(t) {},
+    // Not called in script.
     call_gp: function() {
       var t;
       void 0 !== window.XMLHttpRequest ? t = new XMLHttpRequest() : void 0 !== window.XDomainRequest ? (t = new XDomainRequest(), t.onload = function() {
@@ -1465,6 +1470,7 @@ var _cf = _cf || [],
         t.readyState > 3 && bmak.parse_gp && bmak.parse_gp(t);
       }, t.send();
     },
+    // Not called in script.
     apicall: function(t, a) {
       var e;
       e = window.XDomainRequest ? new XDomainRequest() : window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject("Microsoft.XMLHTTP"), e.open("POST", t, a);
@@ -1473,6 +1479,7 @@ var _cf = _cf || [],
       var o = "{\"session_id\" : \"" + bmak.session_id + "\",\"sensor_data\" : \"" + bmak.sensor_data + "\"" + bmak.auth + "}";
       e.send(o);
     },
+    // Main function for sending Sensor Data to API.
     apicall_bm: function(t, a, e) {
       var n;
       void 0 !== window.XMLHttpRequest ? n = new XMLHttpRequest() : void 0 !== window.XDomainRequest ? (n = new XDomainRequest(), n.onload = function() {
@@ -1634,12 +1641,15 @@ var _cf = _cf || [],
 
       return [e >> 24 & 255, e >> 16 & 255, e >> 8 & 255, 255 & e, n >> 24 & 255, n >> 16 & 255, n >> 8 & 255, 255 & n, o >> 24 & 255, o >> 16 & 255, o >> 8 & 255, 255 & o, m >> 24 & 255, m >> 16 & 255, m >> 8 & 255, 255 & m, r >> 24 & 255, r >> 16 & 255, r >> 8 & 255, 255 & r, i >> 24 & 255, i >> 16 & 255, i >> 8 & 255, 255 & i, c >> 24 & 255, c >> 16 & 255, c >> 8 & 255, 255 & c, b >> 24 & 255, b >> 16 & 255, b >> 8 & 255, 255 & b];
     },
+    // Initializes Akamai Proof of Work challenges
     mn_init: function() {
       var t = 200;
       bmak.pstate && (t = 100), setInterval(bmak.mn_poll, t);
     },
     bdm: function(t, a) {
-      for (var e = 0, n = 0; n < t.length; ++n) e = (e << 8 | t[n]) >>> 0, e %= a;
+      for (var e = 0, n = 0; n < t.length; ++n) {
+        e = (e << 8 | t[n]) >>> 0, e %= a;
+      }
 
       return e;
     },
