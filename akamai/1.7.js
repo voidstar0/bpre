@@ -514,10 +514,10 @@ var _cf = _cf || [],
       m = null != window.document.documentElement.getAttribute("driver") ? "1" : "0";
       var r;
       // Selenium webdriver
-      // return r = null != window.document.documentElement.getAttribute("selenium") ? "1" : "0", [t, a, e, n, o, m, r].join(",");
+      return r = null != window.document.documentElement.getAttribute("selenium") ? "1" : "0", [t, a, e, n, o, m, r].join(",");
 
       // default values to avoid being detected as a bot
-      return "0,0,0,0,1,0,0"
+      // return "0,0,0,0,1,0,0"
     },
     /*
       Mouse events.
