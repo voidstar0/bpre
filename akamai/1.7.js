@@ -1946,7 +1946,9 @@ if (function(t) {
       } catch (t) {
         return "exception";
       }
-    }, a.fonts_optm = function() {
+    }, 
+    
+    a.fonts_optm = function() {
       var t = 200,
         e = bmak.get_cf_date(),
         n = [];
@@ -2006,25 +2008,90 @@ if (function(t) {
 
       return n.join(",");
     },
-    
+    /*
+      Font fingerprinting.
+
+      Render serif, sans-serif, and monospace font
+      in a span and collect the offsetWidth and
+      offsetHeights.
+
+      Once we gather this information, we can render
+      a list of various fonts with serif, sans-serif,
+      and monospace as fallbacks.
+
+      If we compare the offsetWidth and offsetHeights
+      of these new elements to the ones we collected
+      initially we can determine if the user has the
+      font installed on their system.
+      
+      Example from my M1 13 inch Macbook Air:
+      
+      serif:
+        offsetWidth: 1653
+        offsetHeight: 105
+
+      sans-serif:
+        offsetWidth: 1779
+        offsetHeight: 104
+
+      monospace:
+        offsetWidth: 2160
+        offsetHeight: 104
+
+      If we test a font we already have, lets say Geneva, we would define the CSS as:
+      font-family: "Geneva", serif; or 
+      font-family: "Geneva", sans-serif; or
+      font-family: "Geneva", monospace;
+      
+      Geneva:
+        offsetWidth: 2005
+        offsetHeight: 113
+
+      These numbers don't align with any of the fallback values so that means the font exists
+      on our machine..
+
+      However, let's try a font we don't have:
+
+      Lobster:
+        offsetWidth: 1653
+        offsetHeight: 105
+
+      These values match the serif font values which means it fell back because the font doesn't exist.
+
+      If this happens, push the index of the font into an array, sort it, join it by commas and
+      that's what this function returns.
+
+      see: https://digitalworks.union.edu/cgi/viewcontent.cgi?article=3374&context=theses
+    */
     a.fonts = function() {
       var t = [];
 
       if (!a.sf4() && document.body) {
-        var e = ["serif", "sans-serif", "monospace"],
-          n = [0, 0, 0],
-          o = [0, 0, 0],
-          m = document.createElement("span");
-        m.innerHTML = "abcdefhijklmnopqrstuvxyz1234567890;+-.", m.style.fontSize = "90px";
+        var e = ["serif", "sans-serif", "monospace"];
+        var n = [0, 0, 0];
+        var o = [0, 0, 0];
+        var m = document.createElement("span");
+        m.innerHTML = "abcdefhijklmnopqrstuvxyz1234567890;+-.";
+        m.style.fontSize = "90px";
         var r;
 
-        for (r = 0; r < e.length; r++) m.style.fontFamily = e[r], document.body.appendChild(m), n[r] = m.offsetWidth, o[r] = m.offsetHeight, document.body.removeChild(m);
+        for (r = 0; r < e.length; r++) {
+          m.style.fontFamily = e[r];
+          document.body.appendChild(m);
+          n[r] = m.offsetWidth;
+          o[r] = m.offsetHeight;
+          document.body.removeChild(m);
+        }
 
-        for (var i = ["Geneva", "Lobster", "New York", "Century", "Apple Gothic", "Minion Pro", "Apple LiGothic", "Century Gothic", "Monaco", "Lato", "Fantasque Sans Mono", "Adobe Braille", "Cambria", "Futura", "Bell MT", "Courier", "Courier New", "Calibri", "Avenir Next", "Birch Std", "Palatino", "Ubuntu Regular", "Oswald", "Batang", "Ubuntu Medium", "Cantarell", "Droid Serif", "Roboto", "Helvetica Neue", "Corsiva Hebrew", "Adobe Hebrew", "TI-Nspire", "Comic Neue", "Noto", "AlNile", "Palatino-Bold", "ArialHebrew-Light", "Avenir", "Papyrus", "Open Sans", "Times", "Quicksand", "Source Sans Pro", "Damascus", "Microsoft Sans Serif"], c = [], b = 0; b < i.length; b++) {
+        var i = ["Geneva", "Lobster", "New York", "Century", "Apple Gothic", "Minion Pro", "Apple LiGothic", "Century Gothic", "Monaco", "Lato", "Fantasque Sans Mono", "Adobe Braille", "Cambria", "Futura", "Bell MT", "Courier", "Courier New", "Calibri", "Avenir Next", "Birch Std", "Palatino", "Ubuntu Regular", "Oswald", "Batang", "Ubuntu Medium", "Cantarell", "Droid Serif", "Roboto", "Helvetica Neue", "Corsiva Hebrew", "Adobe Hebrew", "TI-Nspire", "Comic Neue", "Noto", "AlNile", "Palatino-Bold", "ArialHebrew-Light", "Avenir", "Papyrus", "Open Sans", "Times", "Quicksand", "Source Sans Pro", "Damascus", "Microsoft Sans Serif"];
+        var c = [];
+        for (var b = 0; b < i.length; b++) {
           var d = !1;
 
           for (r = 0; r < e.length; r++)
-            if (m.style.fontFamily = i[b] + "," + e[r], document.body.appendChild(m), m.offsetWidth === n[r] && m.offsetHeight === o[r] || (d = !0), document.body.removeChild(m), d) {
+          m.style.fontFamily = i[b] + "," + e[r];
+          document.body.appendChild(m);
+          if (m.offsetWidth === n[r] && m.offsetHeight === o[r] || (d = !0), document.body.removeChild(m), d) {
               c.push(b);
               break;
             }
