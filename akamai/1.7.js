@@ -2,18 +2,31 @@
   Akamai version 1.7 grabbed from YeezySupply
 */
 var _cf = _cf || [],
+  /**
+   * @namespace
+   * @property {number} ver           - Akamai version, e.g: 1.7
+   * @property {number} ke_cnt_lmt    - Max keyboard event limit
+   * @property {number} mme_cnt_lmt   - Max mouse move event limit
+   * @property {number} mduce_cnt_lmt - Max mouse down/up event limit
+   * @property {number} pme_cnt_lmt   - 
+   * @property {number} pduce_cnt_lmt - Max pointer event limit
+   * @property {number} tme_cnt_lmt   - Touch move event limit
+   * @property {number} doe_cnt_lmt   - Device orientation event limit
+   * @property {number} dme_cnt_lmt   - Device motion event limit
+   * @property {number} vc_cnt_lmt    - Visibility change count limit
+   */
   bmak = bmak && bmak.hasOwnProperty("ver") && bmak.hasOwnProperty("sed") ? bmak : {
-    ver: 1.7, // Akamai version 1.7
-    ke_cnt_lmt: 150, // Max keyboard event limit
-    mme_cnt_lmt: 100, // Max mouse move event limit
-    mduce_cnt_lmt: 75, // Max mouse down/up event limit
+    ver: 1.7,
+    ke_cnt_lmt: 150,
+    mme_cnt_lmt: 100,
+    mduce_cnt_lmt: 75,
     pme_cnt_lmt: 25,
-    pduce_cnt_lmt: 25, // Max pointer event limit
-    tme_cnt_lmt: 25, // Touch move event limit
-    tduce_cnt_lmt: 25, // Other touch event limit
-    doe_cnt_lmt: 10, // Device orientation event limit
-    dme_cnt_lmt: 10, // Device motion event limit
-    vc_cnt_lmt: 100, // Visibility change count limit
+    pduce_cnt_lmt: 25,
+    tme_cnt_lmt: 25,
+    tduce_cnt_lmt: 25,
+    doe_cnt_lmt: 10,
+    dme_cnt_lmt: 10,
+    vc_cnt_lmt: 100,
     doa_throttle: 0, 
     dma_throttle: 0,
     session_id: "default_session",
@@ -293,17 +306,19 @@ var _cf = _cf || [],
       }
     },
     
-    /*
-      Check if the user is using the Brave browser.
-      The navigator.brave property only exists on
-      Brave browsers.
-
-      Brave is a Chromium basedprivacy browser that 
-      blocks trackers and enables some privacy settings.
-
-      They can potentially use this check to loosen
-      fingerprinting requirements if Brave is detected.
-    */
+    
+    /**
+     * 
+     * Check if the user is using the Brave browser.
+     * The navigator.brave property only exists on
+     * Brave browsers.
+     *
+     * Brave is a Chromium basedprivacy browser that 
+     * blocks trackers and enables some privacy settings.
+     *
+     * They can potentially use this check to loosen
+     * fingerprinting requirements if Brave is detected.
+     */
     gbrv: function() {
       navigator.brave && navigator.brave.isBrave().then(function(t) {
         bmak.brv = t ? 1 : 0;
