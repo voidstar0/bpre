@@ -38,7 +38,7 @@ var _cf = _cf || [],
    * @property {number} enReadDocUrl
    * @property {number} disFpCalOnTimeout
    * @property {number} xagg
-   * @property {number} pen
+   * @property {number} pen                     - Phantom https://phantomjs.org/ has been detected, check bmisc()
    * @property {string} brow
    * @property {string} browver
    * @property {string} psub
@@ -345,9 +345,10 @@ var _cf = _cf || [],
         see: https://github.com/char/bpre/issues/1#issuecomment-914575546
       */
       bmak.z1 = bmak.pi(bmak.start_ts / (bmak.y1 * bmak.y1));
-      var d = Math.random(),
-        s = bmak.pi(1e3 * d / 2),
-        k = d + "";
+      var d = Math.random(), // number between 0 and 1 
+        s = bmak.pi(1e3 * d / 2), // 0 < s < 499 because: 1000 * (nb between 0-1) / 2
+        k = d + ""; // d.toString()
+      
       return k = k.slice(0, 11) + s, bmak.gbrv(), bmak.get_browser(), bmak.bc(), bmak.bmisc(), t + ",uaend," + bmak.xagg + "," + bmak.psub + "," + bmak.lang + "," + bmak.prod + "," + bmak.plen + "," + bmak.pen + "," + bmak.wen + "," + bmak.den + "," + bmak.z1 + "," + bmak.d3 + "," + n + "," + o + "," + m + "," + r + "," + c + "," + i + "," + b + "," + bmak.bd() + "," + a + "," + k + "," + e + "," + bmak.brv + ",loc:" + bmak.loc;
     },
     
