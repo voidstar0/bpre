@@ -94,11 +94,12 @@ var _cf = _cf || [],
     mn_lg: [],
     loap: 1,
     dcs: 0,
-    /*
-      Initialize / Reset variables.
-      One of the first functions to get called.
-      Also gets called in get_telemetry
-    */
+    
+    /**
+     * Initialize / Reset variables.
+     * One of the first functions to get called.
+     * Also gets called in get_telemetry
+     */
     ir: function() {
       bmak.start_ts = Date.now ? Date.now() : +new Date();
       bmak.kact = "";
@@ -144,12 +145,15 @@ var _cf = _cf || [],
       bmak.weh = "";
       bmak.wl = 0;
     },
-    /*
-      Date.now()
-    */
+    
+    /**
+     * Returns the Date in a Unix time format https://en.wikipedia.org/wiki/Unix_time
+     * @returns {number} Unix time (timestamp), e.g: 1631080958
+     */
     get_cf_date: function() {
       return Date.now ? Date.now() : +new Date();
     },
+    
     sd_debug: function(t) {
       if (!bmak.js_post) {
         var a = t;
@@ -160,6 +164,7 @@ var _cf = _cf || [],
     pi: function(t) {
       return parseInt(t);
     },
+    
     /*
       Return User Agent
     */
@@ -224,6 +229,7 @@ var _cf = _cf || [],
         b = -1;
       }
 
+      
       /*
         parseInt(start timestamp / 4064256)
         
@@ -242,6 +248,7 @@ var _cf = _cf || [],
         k = d + "";
       return k = k.slice(0, 11) + s, bmak.gbrv(), bmak.get_browser(), bmak.bc(), bmak.bmisc(), t + ",uaend," + bmak.xagg + "," + bmak.psub + "," + bmak.lang + "," + bmak.prod + "," + bmak.plen + "," + bmak.pen + "," + bmak.wen + "," + bmak.den + "," + bmak.z1 + "," + bmak.d3 + "," + n + "," + o + "," + m + "," + r + "," + c + "," + i + "," + b + "," + bmak.bd() + "," + a + "," + k + "," + e + "," + bmak.brv + ",loc:" + bmak.loc;
     },
+    
     /*
 
     Original Function:
@@ -276,6 +283,7 @@ var _cf = _cf || [],
         bmak.plen = -1;
       }
     },
+    
     /*
       Check if the user is using the Brave browser.
       The navigator.brave property only exists on
@@ -294,6 +302,7 @@ var _cf = _cf || [],
         bmak.brv = 0;
       });
     },
+    
     /*
       Function crafts a bit field that determines whether
       various window functions exist.
@@ -358,6 +367,7 @@ var _cf = _cf || [],
 
       bmak.xagg = t + (a << 1) + (e << 2) + (n << 3) + (o << 4) + (m << 5) + (r << 6) + (i << 7) + (k << 8) + (l << 9) + (c << 10) + (b << 11) + (d << 12) + (s << 13);
     },
+    
     /*
       Check for browser driver automation:
       https://www.selenium.dev/selenium
@@ -365,6 +375,7 @@ var _cf = _cf || [],
     bmisc: function() {
       // _phantom https://phantomjs.org/
       bmak.pen = window._phantom ? 1 : 0;
+      
       /*
         window.webdriver property is true when in:
       Chrome
@@ -407,6 +418,7 @@ var _cf = _cf || [],
       t.push("wrc:" + b);
       var d = "mozInnerScreenY" in window ? window.mozInnerScreenY : 0;
       t.push("isc:" + d);
+      
       /*
         Rough day identifier for start timestamp(bmak.start_ts).
 
@@ -429,6 +441,7 @@ var _cf = _cf || [],
       var u = "FileReader" in window ? 1 : 0;
       return t.push("x12:" + u), t.join(",");
     },
+    
     /*
       Create a bit field checking for the existence of the following properties
       0: navigator.credentials
@@ -476,6 +489,7 @@ var _cf = _cf || [],
         return 0;
       }
     },
+    
     /*
     This function gets an average of performance metrics by
     running various Math and JSON functions several times.
@@ -511,6 +525,7 @@ var _cf = _cf || [],
         bmak.mr = "exception";
       }
     },
+    
     /*
       Checks for a series of properties that only exist while using
       browser driver automation libraries. 
@@ -543,6 +558,7 @@ var _cf = _cf || [],
       // default values to avoid being detected as a bot
       // return "0,0,0,0,1,0,0"
     },
+    
     /*
       Mouse events.
 
@@ -555,6 +571,7 @@ var _cf = _cf || [],
     */
     cma: function(t, a) {
       try {
+        
         /*
           If this function is being triggered by: 
           a mousemove event and the mouse events is less than the mouse move event limit (100)
@@ -585,6 +602,7 @@ var _cf = _cf || [],
         1 == a ? bmak.mme_cnt++ : bmak.mduce_cnt++, bmak.me_cnt++, bmak.js_post && 3 == a && (bmak.aj_type = 1, bmak.bpd(), bmak.pd(!0), bmak.ce_js_post = 1);
       } catch (t) {}
     },
+    
     /*
       Another one of Akamai's obfuscated ways of
       return current timestamp in milliseconds.
@@ -602,6 +620,7 @@ var _cf = _cf || [],
         o = 0;
       return "function" == typeof n && (o = n()), o;
     },
+    
     /*
       Queries a bunch of permissions and maps into an array that
       states whether the permission was
@@ -667,6 +686,7 @@ var _cf = _cf || [],
         bmak.nav_perm = 7;
       }
     },
+    
     /*
       This function handles pointer events.
       Pointer events can be triggered by pen/stylus
@@ -684,6 +704,7 @@ var _cf = _cf || [],
         if (1 == a && bmak.pme_cnt < bmak.pme_cnt_lmt || 1 != a && bmak.pduce_cnt < bmak.pduce_cnt_lmt) {
           var n = t || window.event;
 
+          
           /*
             Only run this if the user is not using a mouse
             (is using a pen or touchscreen)
@@ -704,6 +725,7 @@ var _cf = _cf || [],
         1 == a ? bmak.pme_cnt++ : bmak.pduce_cnt++, bmak.pe_cnt++, bmak.js_post && 3 == a && e && (bmak.aj_type = 2, bmak.bpd(), bmak.pd(!0), bmak.ce_js_post = 1);
       } catch (t) {}
     },
+    
     /*
       Takes in a string as a parameter
       Iterates over the string
@@ -737,6 +759,7 @@ var _cf = _cf || [],
     ff: function(t) {
       return String.fromCharCode(t);
     },
+    
     /*
       Distance formula
       https://www.varsitytutors.com/hotmath/hotmath_help/topics/distance-formula-in-3d
@@ -764,6 +787,7 @@ var _cf = _cf || [],
 
       bmak.o9 = a * e;
     },
+    
     /*
       The t parameter is the start timestamp (start_ts)
       Original function:
@@ -791,6 +815,7 @@ var _cf = _cf || [],
 
       return [a, bmak.cal_dis(o)];
     },
+    
     /*
       Text rendering based fingerprinting.
       By rendering various fonts and taking note of device pixel ratio
@@ -822,6 +847,7 @@ var _cf = _cf || [],
       // whereas 2 indicates HiDPI/Retina.
       bmak.fmz = "devicePixelRatio" in window && void 0 !== window.devicePixelRatio ? window.devicePixelRatio : -1;
     },
+    
     /*
     WebGL based detections through the capturing of GPU and vendor
     + the collection of hashed supported web extensions.
@@ -874,6 +900,7 @@ var _cf = _cf || [],
         bmak.wl = 0;
       }
     },
+    
     /*
       Can be used to fingerprint and determine what device/browser
       a user is using.
@@ -903,6 +930,7 @@ var _cf = _cf || [],
         } else bmak.ssh = "0";
       } else bmak.ssh = "n";
     },
+    
     /*
       Create a bit field checking for the existence of any
       browser automation drivers
@@ -959,6 +987,7 @@ var _cf = _cf || [],
         return 0;
       }
     },
+    
     /*
       Checks if navigator.webdriver is true.
       https://developer.mozilla.org/en-US/docs/Web/API/Navigator/webdriver
@@ -976,6 +1005,7 @@ var _cf = _cf || [],
         return 0;
       }
     },
+    
     /*
       Accumulate the ascii values of each character of 
       "name" or "id" attribute
@@ -1026,6 +1056,7 @@ var _cf = _cf || [],
       var e = a.getAttribute("type");
       return 1 == (null == e ? -1 : bmak.get_type(e)) && bmak.fidcnt > 12 && -2 == t ? 1 : 0;
     },
+    
     /*
       Key event function
       Gets called on 
@@ -1061,6 +1092,7 @@ var _cf = _cf || [],
         o && e && bmak.ke_cnt++, !bmak.js_post || 1 != a || 13 != n && 9 != n || (bmak.aj_type = 3, bmak.bpd(), bmak.pd(!0), bmak.ce_js_post = 1);
       } catch (t) {}
     },
+    
     /*
       Touch events function
       Get called on:
@@ -1084,6 +1116,7 @@ var _cf = _cf || [],
         1 == a ? bmak.tme_cnt++ : bmak.tduce_cnt++, bmak.te_cnt++, bmak.js_post && 2 == a && bmak.aj_indx_tact < bmak.aj_lmt_tact && (bmak.aj_type = 5, bmak.bpd(), bmak.pd(!0), bmak.ce_js_post = 1, bmak.aj_indx_tact++);
       } catch (t) {}
     },
+    
     /*
       Parse the parameter as a float and only
       return the float with a precision of 2
@@ -1139,6 +1172,7 @@ var _cf = _cf || [],
         bmak.js_post && bmak.dme_cnt > 1 && bmak.aj_indx_dmact < bmak.aj_lmt_dmact && (bmak.aj_type = 7, bmak.bpd(), bmak.pd(!0), bmak.ce_js_post = 1, bmak.aj_indx_dmact++), bmak.dma_throttle++;
       } catch (t) {}
     },
+    
     /*
       Get type of HTML input element
       return 0 for: "text", "search", "url", "email", "tel", "number"
@@ -1148,6 +1182,7 @@ var _cf = _cf || [],
     get_type: function(t) {
       return t = t.toLowerCase(), "text" == t || "search" == t || "url" == t || "email" == t || "tel" == t || "number" == t ? 0 : "password" == t ? 1 : 2;
     },
+    
     /*
       Return -1 if null otherwise return parameter
     */
@@ -1174,6 +1209,7 @@ var _cf = _cf || [],
 
       return null == bmak.ins && (bmak.ins = a), bmak.cns = a, t;
     },
+    
     /*
       Adds event listeners for device orientation & device motion
     */
@@ -1249,6 +1285,7 @@ var _cf = _cf || [],
     get_telemetry: function() {
       return bmak.bpd(), bmak.ir(), bmak.sensor_data;
     },
+    
     /*
       Get the document URL and remove escape / quotation mark if exists.
       Return empty string if bmak.enReadDocUrl is false
@@ -1256,6 +1293,7 @@ var _cf = _cf || [],
     getdurl: function() {
       return bmak.enReadDocUrl ? document.URL.replace(/\\|"/g, "") : "";
     },
+    
     /*
       Returns a random 5 character sequence of numbers and letters
     */
@@ -1279,6 +1317,7 @@ var _cf = _cf || [],
 
       return t;
     },
+    
     /*
       Used to return the value of the cookie name stored in bmak.ckie (_abck cookie)
 
@@ -1301,6 +1340,7 @@ var _cf = _cf || [],
         }
       return !1;
     },
+    
     /*
       This functions is where the sensor_data for the outgoing cookie
       gets crafted.
@@ -1332,6 +1372,7 @@ var _cf = _cf || [],
           l = k(80) + k(105) + k(90) + k(116) + k(69), // PiZtE
           u = bmak.jrs(bmak.start_ts),
           _ = bmak.get_cf_date() - bmak.start_ts,
+          
           /*
             Week identifier for start timestamp(bmak.start_ts).
 
@@ -1421,6 +1462,7 @@ var _cf = _cf || [],
 
       return t;
     },
+    
     /*
 
     Original Function:
@@ -1431,6 +1473,7 @@ var _cf = _cf || [],
     rir: function(t, a, e, n) {
       return t > a && t <= e && (t += n % (e - a)) > e && (t = t - e + a), t;
     },
+    
     /*
       Triggered on visibility change.
     */
@@ -1450,6 +1493,7 @@ var _cf = _cf || [],
         bmak.vc_cnt++;
       } catch (t) {}
     },
+    
     /*
       Gets triggered on "visibilitychange", "mozvisibilitychange", "msvisibilitychange", and "webkitvisibilitychange"
     */
@@ -1468,6 +1512,7 @@ var _cf = _cf || [],
     rve: function() {
       void 0 !== document.hidden ? (bmak.hn = "hidden", bmak.vc = "visibilitychange") : void 0 !== document.mozHidden ? (bmak.hn = "mozHidden", bmak.vc = "mozvisibilitychange") : void 0 !== document.msHidden ? (bmak.hn = "msHidden", bmak.vc = "msvisibilitychange") : void 0 !== document.webkitHidden && (bmak.hn = "webkitHidden", bmak.vc = "webkitvisibilitychange"), document.addEventListener ? "unk" != bmak.hn && document.addEventListener(bmak.vc, bmak.hvc, !0) : document.attachEvent && "unk" != bmak.hn && document.attachEvent(bmak.vc, bmak.hvc), window.onblur = bmak.hb, window.onfocus = bmak.hf;
     },
+    
     /*
       Start tracking device orientation and device motion
       and then setup event listeners for other event
@@ -1526,6 +1571,7 @@ var _cf = _cf || [],
       }
       bmak.firstLoad = !1;
     },
+    
     /*
       Checks if a character is a part of the extended
       ASCII code range. If it isn't return 0 otherwise
@@ -1540,6 +1586,7 @@ var _cf = _cf || [],
       var e = t.charCodeAt(a);
       return e = e > 255 ? 0 : e;
     },
+    
     /*
       Base64 encode a string.
 
@@ -1708,6 +1755,7 @@ var _cf = _cf || [],
     encode_utf8: function(t) {
       return unescape(encodeURIComponent(t));
     },
+    
     /*
       Mini SHA 256 function.
       Takes in the string to hash
@@ -1777,6 +1825,7 @@ var _cf = _cf || [],
     mn_pr: function() {
       return bmak.mn_al.join(",") + ";" + bmak.mn_tcl.join(",") + ";" + bmak.mn_il.join(",") + ";" + bmak.mn_lg.join(",") + ";";
     },
+    
     /*
     This function takes in an array of numbers and converts it to a hex string.
     All instances of this function are called with the result of bmak.mn_s (SHA256) as the parameter
@@ -1926,6 +1975,7 @@ if (function(t) {
 
       return e;
     }, 
+    
     /*
       Canvas Fingerprinting
       see: https://browserleaks.com/canvas#how-does-it-work
@@ -2028,6 +2078,7 @@ if (function(t) {
 
       return n.join(",");
     },
+    
     /*
       Font fingerprinting.
 
@@ -2122,6 +2173,7 @@ if (function(t) {
 
       return t.join(",");
     },
+    
     /*
       Check for WebRTC.
       Doesn't exist in IE. Added in Safari 11
@@ -2184,7 +2236,6 @@ if (function(t) {
     bmak.startTracking();
     bmak.tst = bmak.get_cf_date() - bmak.t_tst;
     bmak.disFpCalOnTimeout || setTimeout(bmak.calc_fp, 500);
-
 
     /*
       Run the performance metric function 3 times.
