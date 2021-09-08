@@ -4,16 +4,96 @@
 var _cf = _cf || [],
   /**
    * @namespace
-   * @property {number} ver           - Akamai version, e.g: 1.7
-   * @property {number} ke_cnt_lmt    - Max keyboard event limit
-   * @property {number} mme_cnt_lmt   - Max mouse move event limit
-   * @property {number} mduce_cnt_lmt - Max mouse down/up event limit
-   * @property {number} pme_cnt_lmt   - 
-   * @property {number} pduce_cnt_lmt - Max pointer event limit
-   * @property {number} tme_cnt_lmt   - Touch move event limit
-   * @property {number} doe_cnt_lmt   - Device orientation event limit
-   * @property {number} dme_cnt_lmt   - Device motion event limit
-   * @property {number} vc_cnt_lmt    - Visibility change count limit
+   * @property {number} ver                     - Akamai version, e.g: 1.7
+   * @property {number} ke_cnt_lmt              - Max keyboard event limit
+   * @property {number} mme_cnt_lmt             - Max mouse move event limit
+   * @property {number} mduce_cnt_lmt           - Max mouse down/up event limit
+   * @property {number} pme_cnt_lmt             - 
+   * @property {number} pduce_cnt_lmt           - Max pointer event limit
+   * @property {number} tme_cnt_lmt             - Touch move event limit
+   * @property {number} doe_cnt_lmt             - Device orientation event limit
+   * @property {number} dme_cnt_lmt             - Device motion event limit
+   * @property {number} vc_cnt_lmt              - Visibility change count limit
+   * @property {number} doa_throttle
+   * @property {number} dma_throttle
+   * @property {string} session_id
+   * @property {boolean | number} js_post
+   * @property {string} loc
+   * @property {string} cf_url
+   * @property {string} params_url
+   * @property {string} auth
+   * @property {string} api_public_key
+   * @property {number} aj_lmt_doact
+   * @property {number} aj_lmt_dmact
+   * @property {number} aj_lmt_tact
+   * @property {number} ce_js_post
+   * @property {number} init_time
+   * @property {string} informinfo
+   * @property {number} prevfid
+   * @property {number} fidcnt
+   * @property sensor_data
+   * @property ins
+   * @property cns
+   * @property {number} enGetLoc
+   * @property {number} enReadDocUrl
+   * @property {number} disFpCalOnTimeout
+   * @property {number} xagg
+   * @property {number} pen
+   * @property {string} brow
+   * @property {string} browver
+   * @property {string} psub
+   * @property {string} lang
+   * @property {string} prod
+   * @property {number} plen
+   * @property {number} doadma_en
+   * @property sdfn
+   * @property {number} d2
+   * @property {number} d3
+   * @property {number} thr
+   * @property {string} cs
+   * @property {string} hn
+   * @property {number} z1
+   * @property {number} o9
+   * @property vc
+   * @property {number} y1
+   * @property {number} ta
+   * @property {number} tst
+   * @property {number} t_tst
+   * @property {string} ckie                    -  
+   * @property n_ck
+   * @property {number} ckurl
+   * @property bm
+   * @property {string} mr
+   * @property altFonts
+   * @property rst
+   * @property runFonts
+   * @property fsp
+   * @property firstLoad
+   * @property pstate
+   * @property {number} mn_mc_lmt
+   * @property {number} mn_state
+   * @property {number} mn_mc_indx
+   * @property {number} mn_sen
+   * @property {number} mn_tout
+   * @property {number} mn_stout
+   * @property {number} mn_ct
+   * @property {string} mn_cc
+   * @property {number} mn_cd
+   * @property mn_lc
+   * @property mn_ld
+   * @property {number} mn_lcl
+   * @property mn_al
+   * @property mn_il
+   * @property mn_tcl
+   * @property mn_r
+   * @property {number} mn_rt
+   * @property {number} mn_wt
+   * @property {string} mn_abck
+   * @property {string} mn_psn
+   * @property {string} mn_ts
+   * @property mn_lg
+   * @property {number} loap
+   * @property {number} dcs
    */
   bmak = bmak && bmak.hasOwnProperty("ver") && bmak.hasOwnProperty("sed") ? bmak : {
     ver: 1.7,
