@@ -147,30 +147,39 @@ var _cf = _cf || [],
     },
     
     /**
-     * Returns the Date in a Unix time format https://en.wikipedia.org/wiki/Unix_time
+     * Returns the Date in a Unix time format 
+     * https://en.wikipedia.org/wiki/Unix_time
      * @returns {number} Unix time (timestamp), e.g: 1631080958
      */
     get_cf_date: function() {
       return Date.now ? Date.now() : +new Date();
     },
-    
+
     sd_debug: function(t) {
       if (!bmak.js_post) {
         var a = t;
         "string" == typeof _sd_trace ? _sd_trace += a : _sd_trace = a;
       }
     },
-    // parseInt
+    
+    /**
+     * Convert a string to a number
+     * @param {string} t string to convert to number, e.g: "23"
+     * @returns string converted to a number
+     */
     pi: function(t) {
       return parseInt(t);
     },
     
-    /*
-      Return User Agent
-    */
+    /**
+     * Returns the User-Agent of the current browser window 
+     * https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent
+     * @returns {string} a User-Agent string stripped from every \\|" string, e.g: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.1.2 Safari/605.1.15
+     */
     uar: function() {
       return window.navigator.userAgent.replace(/\\|"/g, "");
     },
+
     gd: function() {
       var t = bmak.uar(), // user agent
         a = "" + bmak.ab(t), // Accumulate all char codes in the user agent and return number
