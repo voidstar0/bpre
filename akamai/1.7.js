@@ -1276,9 +1276,19 @@ var _cf = _cf || [],
 
       return t;
     },
+    /*
+      Used to return the value of the cookie name stored in bmak.ckie (_abck cookie)
+
+      Traverses all cookies and if the cookie name matches the parameter and if
+      the cookie value contains a ~ then return the cookie value.
+
+      Return false otherwise
+    */
     cookie_chk_read: function(t) {
       if (document.cookie)
-        for (var a = t + "=", e = document.cookie.split("; "), n = 0; n < e.length; n++) {
+        var a = t + "=";
+        var e = document.cookie.split("; ");
+        for (var n = 0; n < e.length; n++) {
           var o = e[n];
 
           if (0 === o.indexOf(a)) {
