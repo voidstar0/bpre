@@ -1489,13 +1489,13 @@ var _cf = _cf || [],
       return 1 == (null == e ? -1 : bmak.get_type(e)) && bmak.fidcnt > 12 && -2 == t ? 1 : 0;
     },
     
-    /*
-      Key event function
-      Gets called on 
-      "keydown", "onkeydown", (a = 1)
-      "keyup", "onkeyup", (a = 2)
-      "keypress", "onkeypress" (a = 3)
-    */
+    /**
+     * Key event function
+     * Gets called on 
+     * "keydown", "onkeydown", (a = 1)
+     * "keyup", "onkeyup", (a = 2)
+     * "keypress", "onkeypress" (a = 3)
+     */
     cka: function(t, a) {
       try {
         var e = t || window.event,
@@ -1525,14 +1525,14 @@ var _cf = _cf || [],
       } catch (t) {}
     },
     
-    /*
-      Touch events function
-      Get called on:
-      "touchmove" (a = 1)
-      "touchstart" (a = 2)
-      "touchend" (a = 3)
-      "touchcancel" (a = 4)
-    */
+    /**
+     * Touch events function
+     * Get called on:
+     * "touchmove" (a = 1)
+     * "touchstart" (a = 2)
+     * "touchend" (a = 3)
+     * "touchcancel" (a = 4)
+     */
     cta: function(t, a) {
       try {
         if (1 == a && bmak.tme_cnt < bmak.tme_cnt_lmt || 1 != a && bmak.tduce_cnt < bmak.tduce_cnt_lmt) {
@@ -1549,14 +1549,15 @@ var _cf = _cf || [],
       } catch (t) {}
     },
     
-    /*
-      Parse the parameter as a float and only
-      return the float with a precision of 2
-      decimal spaces.
-
-      Return -1 if it can't be properly parsed
-      as a float.
-    */
+    /**
+     * Parse the parameter as a float and only
+     * return the float with a precision of 2
+     * decimal spaces.
+     *
+     * Return -1 if it can't be properly parsed
+     * as a float.
+     * @returns {number}
+     */
     getFloatVal: function(t) {
       try {
         if (-1 != bmak.chknull(t) && !isNaN(t)) {
@@ -1567,6 +1568,7 @@ var _cf = _cf || [],
 
       return -1;
     },
+
     cdoa: function(t) {
       try {
         if (bmak.doe_cnt < bmak.doe_cnt_lmt && bmak.doa_throttle < 2 && t) {
@@ -1581,6 +1583,7 @@ var _cf = _cf || [],
         bmak.js_post && bmak.doe_cnt > 1 && bmak.aj_indx_doact < bmak.aj_lmt_doact && (bmak.aj_type = 6, bmak.bpd(), bmak.pd(!0), bmak.ce_js_post = 1, bmak.aj_indx_doact++), bmak.doa_throttle++;
       } catch (t) {}
     },
+
     cdma: function(t) {
       try {
         if (bmak.dme_cnt < bmak.dme_cnt_lmt && bmak.dma_throttle < 2 && t) {
@@ -1605,22 +1608,26 @@ var _cf = _cf || [],
       } catch (t) {}
     },
     
-    /*
-      Get type of HTML input element
-      return 0 for: "text", "search", "url", "email", "tel", "number"
-      return 1 for: "password"
-      return 2 for: anything else
-    */
+    /**
+     * Get type of HTML input element    
+     * return 0 for: "text", "search", "url", "email", "tel", "number"    
+     * return 1 for: "password"    
+     * return 2 for: anything else    
+     * @returns {number}
+     */
     get_type: function(t) {
       return t = t.toLowerCase(), "text" == t || "search" == t || "url" == t || "email" == t || "tel" == t || "number" == t ? 0 : "password" == t ? 1 : 2;
     },
     
-    /*
-      Return -1 if null otherwise return parameter
-    */
+    /**
+     * Return -1 if null otherwise return parameter
+     * @param {any} t 
+     * @returns {number|any}
+     */
     chknull: function(t) {
       return null == t ? -1 : t;
     },
+
     getforminfo: function() {
       for (var t = "", a = "", e = document.getElementsByTagName("input"), n = -1, o = 0; o < e.length; o++) {
         var m = e[o],
@@ -1642,67 +1649,94 @@ var _cf = _cf || [],
       return null == bmak.ins && (bmak.ins = a), bmak.cns = a, t;
     },
     
-    /*
-      Adds event listeners for device orientation & device motion
-    */
+    /**
+     * Adds event listeners for device orientation & device motion
+     */
     startdoadma: function() {
       0 == bmak.doadma_en && window.addEventListener && (window.addEventListener("deviceorientation", bmak.cdoa, !0), window.addEventListener("devicemotion", bmak.cdma, !0), bmak.doadma_en = 1), bmak.doa_throttle = 0, bmak.dma_throttle = 0;
     },
     updatet: function() {
       return bmak.get_cf_date() - bmak.start_ts;
     },
-    // "touchmove" event
-    htm: function(t) {
+    /**
+     * "touchmove" event
+     */
+     htm: function(t) {
       bmak.cta(t, 1);
     },
-    // "touchstart" event
+    /**
+     * "touchstart" event
+     */
     hts: function(t) {
       bmak.cta(t, 2);
     },
-    // "touchend" event
+    /**
+     * "touchend" event
+     */
     hte: function(t) {
       bmak.cta(t, 3);
     },
-    // "touchcancel" event
+    /**
+     * "touchcancel" event
+     */
     htc: function(t) {
       bmak.cta(t, 4);
     },
-    // "mousemove" event
+    /**
+     * "mousemove" event
+     */
     hmm: function(t) {
       bmak.cma(t, 1);
     },
-    // "click" event
+    /**
+     * "click" event
+     */
     hc: function(t) {
       bmak.cma(t, 2);
     },
-    // "mousedown" event
+    /**
+     * "mousedown" event
+     */
     hmd: function(t) {
       bmak.cma(t, 3);
     },
-    // "mouseup" event
+    /**
+     * "mouseup" event
+     */
     hmu: function(t) {
       bmak.cma(t, 4);
     },
-    // "pointerdown" event
+    /**
+     * "pointerdown" event
+     */
     hpd: function(t) {
       bmak.cpa(t, 3);
     },
-    // "pointerup" event
+    /**
+     * "pointerup" event
+     */
     hpu: function(t) {
       bmak.cpa(t, 4);
     },
-    // "keydown" event
+    /**
+     * "keydown" event
+     */
     hkd: function(t) {
       bmak.cka(t, 1);
     },
-    // "keyup" event
+    /**
+     * "keyup" event
+     */
     hku: function(t) {
       bmak.cka(t, 2);
     },
-    // "keypress" event
+    /**
+     * "keypress" event
+     */
     hkp: function(t) {
       bmak.cka(t, 3);
     },
+
     form_submit: function() {
       try {
         if (bmak.bpd(), 0 == bmak.sdfn.length) {
@@ -1718,17 +1752,18 @@ var _cf = _cf || [],
       return bmak.bpd(), bmak.ir(), bmak.sensor_data;
     },
     
-    /*
-      Get the document URL and remove escape / quotation mark if exists.
-      Return empty string if bmak.enReadDocUrl is false
-    */
+    /**
+     * Get the document URL and remove escape / quotation mark if exists.
+     * @returns {string} document URL or empty string if bmak.enReadDocUrl is false
+     */
     getdurl: function() {
       return bmak.enReadDocUrl ? document.URL.replace(/\\|"/g, "") : "";
     },
     
-    /*
-      Returns a random 5 character sequence of numbers and letters
-    */
+    /**
+     * Returns a random 5 character sequence of numbers and letters
+     * @returns {string} a random 5 character sequence of numbers and letters
+     */
     x1: function() {
       return Math.floor(16777216 * (1 + Math.random())).toString(36);
     },
@@ -1750,14 +1785,15 @@ var _cf = _cf || [],
       return t;
     },
     
-    /*
-      Used to return the value of the cookie name stored in bmak.ckie (_abck cookie)
-
-      Traverses all cookies and if the cookie name matches the parameter and if
-      the cookie value contains a ~ then return the cookie value.
-
-      Return false otherwise
-    */
+    /**
+     * Used to return the value of the cookie name stored in bmak.ckie (_abck cookie)
+     * 
+     * Traverses all cookies and if the cookie name matches the parameter and if
+     * the cookie value contains a ~ then return the cookie value.
+     * 
+     * Return false otherwise
+     * @returns {string|boolean}
+     */
     cookie_chk_read: function(t) {
       if (document.cookie)
         var a = t + "=";
@@ -1773,10 +1809,10 @@ var _cf = _cf || [],
       return !1;
     },
     
-    /*
-      This functions is where the sensor_data for the outgoing cookie
-      gets crafted.
-    */
+    /**
+     * This functions is where the sensor_data for the outgoing cookie
+     * gets crafted.
+     */
     bpd: function() {
       bmak.sd_debug("<bpd>");
       var t = 0;
@@ -1869,9 +1905,13 @@ var _cf = _cf || [],
 
       bmak.sd_debug("</bpd>");
     },
-    // t = bmak.cs, a = api_public_key
-    // t = 0a46G5m17Vrp4o4c
-    // a = afSbep8yjnZUjq3aL010jO15Sawj2VZfdYK8uY90uxq
+    
+    /**
+     * 
+     * @param {string} t 
+     * @param {string} a 
+     * @returns {string}
+     */
     od: function(t, a) {
       try {
         t = String(t), a = String(a);
@@ -1906,9 +1946,10 @@ var _cf = _cf || [],
       return t > a && t <= e && (t += n % (e - a)) > e && (t = t - e + a), t;
     },
     
-    /*
-      Triggered on visibility change.
-    */
+    /**
+     * Triggered on visibility change.
+     * @param {*} t 
+     */
     lvc: function(t) {
       try {
         // If visibility change count is less than the limit (100)
@@ -1926,9 +1967,9 @@ var _cf = _cf || [],
       } catch (t) {}
     },
     
-    /*
-      Gets triggered on "visibilitychange", "mozvisibilitychange", "msvisibilitychange", and "webkitvisibilitychange"
-    */
+    /**
+     * Gets triggered on "visibilitychange", "mozvisibilitychange", "msvisibilitychange", and "webkitvisibilitychange"
+     */
     hvc: function() {
       try {
         var t = 1;
@@ -1945,14 +1986,14 @@ var _cf = _cf || [],
       void 0 !== document.hidden ? (bmak.hn = "hidden", bmak.vc = "visibilitychange") : void 0 !== document.mozHidden ? (bmak.hn = "mozHidden", bmak.vc = "mozvisibilitychange") : void 0 !== document.msHidden ? (bmak.hn = "msHidden", bmak.vc = "msvisibilitychange") : void 0 !== document.webkitHidden && (bmak.hn = "webkitHidden", bmak.vc = "webkitvisibilitychange"), document.addEventListener ? "unk" != bmak.hn && document.addEventListener(bmak.vc, bmak.hvc, !0) : document.attachEvent && "unk" != bmak.hn && document.attachEvent(bmak.vc, bmak.hvc), window.onblur = bmak.hb, window.onfocus = bmak.hf;
     },
     
-    /*
-      Start tracking device orientation and device motion
-      and then setup event listeners for other event
-      tracking (e.g: key tracking, mouse tracking)
-
-      This function calls the startdoadma function initially
-      and then on a 3 second interval.
-    */
+    /**
+     * Start tracking device orientation and device motion
+     * and then setup event listeners for other event
+     * tracking (e.g: key tracking, mouse tracking)
+     *
+     * This function calls the startdoadma function initially
+     * and then on a 3 second interval.
+     */
     startTracking: function() {
       bmak.startdoadma();
 
@@ -2004,29 +2045,30 @@ var _cf = _cf || [],
       bmak.firstLoad = !1;
     },
     
-    /*
-      Checks if a character is a part of the extended
-      ASCII code range. If it isn't return 0 otherwise
-      return the character code.
-
-      see: https://www.ascii-code.com/
-
-      t: String to check
-      a: Index of character you want to check
-    */
+    /**
+     * Checks if a character is a part of the extended
+     * ASCII code range. If it isn't return 0 otherwise
+     * return the character code.
+     * 
+     * @see: https://www.ascii-code.com/
+     * @param {string} t string to check
+     * @param {number} a index of character you want to check
+     * @returns {number}
+     */
     gb: function(t, a) {
       var e = t.charCodeAt(a);
       return e = e > 255 ? 0 : e;
     },
     
-    /*
-      Base64 encode a string.
-
-      If the btoa function doesn't exist then it uses
-      its own.
-
-      see: https://developer.mozilla.org/en-US/docs/Web/API/btoa
-    */
+    /**
+     * Base64 encode a string.
+     * 
+     * If the btoa function doesn't exist then it uses
+     * its own.
+     * 
+     * @see https://developer.mozilla.org/en-US/docs/Web/API/btoa
+     * @returns
+     */
     encode: function(t) {
       if ("undefined" != typeof btoa) return btoa(t);
 
@@ -2034,7 +2076,11 @@ var _cf = _cf || [],
 
       return t.length % 3 == 1 && (a = bmak.gb(t, s), o = a >> 2, m = (3 & a) << 4, b = b + c.charAt(o) + c.charAt(m) + "=="), t.length % 3 == 2 && (a = bmak.gb(t, s), e = bmak.gb(t, s + 1), o = a >> 2, m = ((3 & a) << 4) + (e >> 4), r = (15 & e) << 2, b = b + c.charAt(o) + c.charAt(m) + c.charAt(r) + "="), b;
     },
-    // IE 9 or less check.
+    
+    /**
+     * IE 9 or less check.
+     * @returns {boolean}
+     */
     ie9OrLower: function() {
       try {
         if ("string" == typeof navigator.appVersion && -1 != navigator.appVersion.indexOf("MSIE")) {
@@ -2044,9 +2090,16 @@ var _cf = _cf || [],
 
       return !1;
     },
-    // Returns nothing.
+    
+    /**
+     * Returns nothing.
+     * @param {*} t 
+     */
     parse_gp: function(t) {},
-    // Not called in script.
+    
+    /**
+     * Not called in script.
+     */
     call_gp: function() {
       var t;
       void 0 !== window.XMLHttpRequest ? t = new XMLHttpRequest() : void 0 !== window.XDomainRequest ? (t = new XDomainRequest(), t.onload = function() {
@@ -2055,7 +2108,12 @@ var _cf = _cf || [],
         t.readyState > 3 && bmak.parse_gp && bmak.parse_gp(t);
       }, t.send();
     },
-    // Not called in script.
+    
+    /**
+     * Not called in script.
+     * @param {*} t 
+     * @param {*} a 
+     */
     apicall: function(t, a) {
       var e;
       e = window.XDomainRequest ? new XDomainRequest() : window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject("Microsoft.XMLHTTP"), e.open("POST", t, a);
@@ -2064,7 +2122,13 @@ var _cf = _cf || [],
       var o = "{\"session_id\" : \"" + bmak.session_id + "\",\"sensor_data\" : \"" + bmak.sensor_data + "\"" + bmak.auth + "}";
       e.send(o);
     },
-    // Main function for sending Sensor Data to API.
+    
+    /**
+     * Main function for sending Sensor Data to API.
+     * @param {*} t 
+     * @param {*} a 
+     * @param {*} e 
+     */
     apicall_bm: function(t, a, e) {
       var n;
       void 0 !== window.XMLHttpRequest ? n = new XMLHttpRequest() : void 0 !== window.XDomainRequest ? (n = new XDomainRequest(), n.onload = function() {
@@ -2188,11 +2252,13 @@ var _cf = _cf || [],
       return unescape(encodeURIComponent(t));
     },
     
-    /*
-      Mini SHA 256 function.
-      Takes in the string to hash
-      Returns the hashed output as a byte array
-    */
+    /**
+     * Mini SHA 256 function.
+     * Takes in the string to hash
+     * Returns the hashed output as a byte array
+     * @param {*} t
+     * @returns
+     */
     mn_s: function(t) {
       var a = [1116352408, 1899447441, 3049323471, 3921009573, 961987163, 1508970993, 2453635748, 2870763221, 3624381080, 310598401, 607225278, 1426881987, 1925078388, 2162078206, 2614888103, 3248222580, 3835390401, 4022224774, 264347078, 604807628, 770255983, 1249150122, 1555081692, 1996064986, 2554220882, 2821834349, 2952996808, 3210313671, 3336571891, 3584528711, 113926993, 338241895, 666307205, 773529912, 1294757372, 1396182291, 1695183700, 1986661051, 2177026350, 2456956037, 2730485921, 2820302411, 3259730800, 3345764771, 3516065817, 3600352804, 4094571909, 275423344, 430227734, 506948616, 659060556, 883997877, 958139571, 1322822218, 1537002063, 1747873779, 1955562222, 2024104815, 2227730452, 2361852424, 2428436474, 2756734187, 3204031479, 3329325298],
         e = 1779033703,
@@ -2227,7 +2293,10 @@ var _cf = _cf || [],
 
       return [e >> 24 & 255, e >> 16 & 255, e >> 8 & 255, 255 & e, n >> 24 & 255, n >> 16 & 255, n >> 8 & 255, 255 & n, o >> 24 & 255, o >> 16 & 255, o >> 8 & 255, 255 & o, m >> 24 & 255, m >> 16 & 255, m >> 8 & 255, 255 & m, r >> 24 & 255, r >> 16 & 255, r >> 8 & 255, 255 & r, i >> 24 & 255, i >> 16 & 255, i >> 8 & 255, 255 & i, c >> 24 & 255, c >> 16 & 255, c >> 8 & 255, 255 & c, b >> 24 & 255, b >> 16 & 255, b >> 8 & 255, 255 & b];
     },
-    // Initializes Akamai Proof of Work challenges
+    
+    /**
+     * Initializes Akamai Proof of Work challenges
+     */
     mn_init: function() {
       var t = 200;
       bmak.pstate && (t = 100), setInterval(bmak.mn_poll, t);
@@ -2258,21 +2327,23 @@ var _cf = _cf || [],
       return bmak.mn_al.join(",") + ";" + bmak.mn_tcl.join(",") + ";" + bmak.mn_il.join(",") + ";" + bmak.mn_lg.join(",") + ";";
     },
     
-    /*
-    This function takes in an array of numbers and converts it to a hex string.
-    All instances of this function are called with the result of bmak.mn_s (SHA256) as the parameter
-
-    Example:
-      const hashed_abc = bmak.mn_s("abc"); // [186,120,22,191,143,1,207,234,65,65,64,222,93,174,34,35,176,3,97,163,150,23,122,156,180,16,255,97,242,0,21,173]
-      const hashed_abc_hex = bmak.ats(hashed_abc); // ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad
-
-    Original Function:
-      ats: function(t) {
-        for (var a = "", e = 0; e < t.length; e++) a += 2 == t[e].toString(16).length ? t[e].toString(16) : "0" + t[e].toString(16);
-
-        return a;
-      }
-    */
+    /**
+     * This function takes in an array of numbers and converts it to a hex string.     
+     * All instances of this function are called with the result of bmak.mn_s (SHA256) as the parameter
+     *
+     * Example:      
+     *   const hashed_abc = bmak.mn_s("abc"); // [186,120,22,191,143,1,207,234,65,65,64,222,93,174,34,35,176,3,97,163,150,23,122,156,180,16,255,97,242,0,21,173]     
+     *   const hashed_abc_hex = bmak.ats(hashed_abc); // ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad
+     *
+     * Original Function:     
+     *   ats: function(t) {     
+     *      for (var a = "", e = 0; e < t.length; e++) a += 2 == t[e].toString(16).length ? t[e].toString(16) : "0" + t[e].toString(16);
+     *
+     *      return a;    
+     *   }
+     * @param {*} t 
+     * @returns 
+     */
     ats: function(t) {
       var a = "";
       for (var e = 0; e < t.length; e++) {
@@ -2408,10 +2479,12 @@ if (function(t) {
       return e;
     }, 
     
-    /*
-      Canvas Fingerprinting
-      see: https://browserleaks.com/canvas#how-does-it-work
-    */
+    /**
+     * Canvas Fingerprinting
+     * @see https://browserleaks.com/canvas#how-does-it-work
+     * @param {*} t 
+     * @returns 
+     */
     a.canvas = function(t) {
       try {
         if (void 0 !== a.cache.canvas) return a.cache.canvas;
@@ -2511,61 +2584,62 @@ if (function(t) {
       return n.join(",");
     },
     
-    /*
-      Font fingerprinting.
-
-      Render serif, sans-serif, and monospace font
-      in a span and collect the offsetWidth and
-      offsetHeights.
-
-      Once we gather this information, we can render
-      a list of various fonts with serif, sans-serif,
-      and monospace as fallbacks.
-
-      If we compare the offsetWidth and offsetHeights
-      of these new elements to the ones we collected
-      initially we can determine if the user has the
-      font installed on their system.
-      
-      Example from my M1 13 inch Macbook Air:
-      
-      serif:
-        offsetWidth: 1653
-        offsetHeight: 105
-
-      sans-serif:
-        offsetWidth: 1779
-        offsetHeight: 104
-
-      monospace:
-        offsetWidth: 2160
-        offsetHeight: 104
-
-      If we test a font we already have, lets say Geneva, we would define the CSS as:
-      font-family: "Geneva", serif; or 
-      font-family: "Geneva", sans-serif; or
-      font-family: "Geneva", monospace;
-      
-      Geneva:
-        offsetWidth: 2005
-        offsetHeight: 113
-
-      These numbers don't align with any of the fallback values so that means the font exists
-      on our machine..
-
-      However, let's try a font we don't have:
-
-      Lobster:
-        offsetWidth: 1653
-        offsetHeight: 105
-
-      These values match the serif font values which means it fell back because the font doesn't exist.
-
-      If this happens, push the index of the font into an array, sort it, join it by commas and
-      that's what this function returns.
-
-      see: https://digitalworks.union.edu/cgi/viewcontent.cgi?article=3374&context=theses
-    */
+    /**
+     * Font fingerprinting.
+     * 
+     * Render serif, sans-serif, and monospace font
+     * in a span and collect the offsetWidth and
+     * offsetHeights.
+     * 
+     * Once we gather this information, we can render
+     * a list of various fonts with serif, sans-serif,
+     * and monospace as fallbacks.
+     * 
+     * If we compare the offsetWidth and offsetHeights
+     * of these new elements to the ones we collected
+     * initially we can determine if the user has the
+     * font installed on their system.
+     * 
+     * Example from my M1 13 inch Macbook Air:
+     * 
+     * serif:
+     *   offsetWidth: 1653
+     *   offsetHeight: 105
+     * 
+     * sans-serif:
+     *   offsetWidth: 1779
+     *   offsetHeight: 104
+     * 
+     * monospace:
+     *   offsetWidth: 2160
+     *   offsetHeight: 104
+     * 
+     * If we test a font we already have, lets say Geneva, we would define the CSS as:
+     * font-family: "Geneva", serif; or 
+     * font-family: "Geneva", sans-serif; or
+     * font-family: "Geneva", monospace;
+     * 
+     * Geneva:
+     *   offsetWidth: 2005
+     *   offsetHeight: 113
+     * 
+     * These numbers don't align with any of the fallback values so that means the font exists
+     * on our machine..
+     * 
+     * However, let's try a font we don't have:
+     * 
+     * Lobster:
+     *   offsetWidth: 1653
+     *   offsetHeight: 105
+     * 
+     * These values match the serif font values which means it fell back because the font doesn't exist.
+     * 
+     * If this happens, push the index of the font into an array, sort it, join it by commas and
+     * that's what this function returns.
+     * 
+     * @see https://digitalworks.union.edu/cgi/viewcontent.cgi?article=3374&context=theses
+     * @returns 
+     */
     a.fonts = function() {
       var t = [];
 
@@ -2606,10 +2680,10 @@ if (function(t) {
       return t.join(",");
     },
     
-    /*
-      Check for WebRTC.
-      Doesn't exist in IE. Added in Safari 11
-    */
+    /**
+     * Check for WebRTC.
+     * Doesn't exist in IE. Added in Safari 11
+     */
     a.webrtcKey = function() {
       return "function" == typeof window.RTCPeerConnection || "function" == typeof window.mozRTCPeerConnection || "function" == typeof window.webkitRTCPeerConnection;
     }, a.indexedDbKey = function() {
