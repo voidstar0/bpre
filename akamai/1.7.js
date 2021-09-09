@@ -1171,16 +1171,20 @@ var _cf = _cf || [],
         return -2;
       }
     },
-    // fromCharCode alias
+    
+    /**
+     * fromCharCode alias
+     * @param {number[]} t the char code
+     * @returns a string from the char code
+     */
     ff: function(t) {
       return String.fromCharCode(t);
     },
     
-    /*
-      Distance formula
-      https://www.varsitytutors.com/hotmath/hotmath_help/topics/distance-formula-in-3d
-
-    */
+    /**
+     * Distance formula
+     * @see https://www.varsitytutors.com/hotmath/hotmath_help/topics/distance-formula-in-3d
+     */
     cal_dis: function(t) {
       var a = t[0] - t[1],
         e = t[2] - t[3],
@@ -1188,6 +1192,10 @@ var _cf = _cf || [],
         o = Math.sqrt(a * a + e * e + n * n);
       return Math.floor(o);
     },
+
+    /**
+     * 
+     */
     to: function() {
       var t = bmak.x2() % 1e7;
       bmak.d3 = t;
@@ -1204,19 +1212,26 @@ var _cf = _cf || [],
       bmak.o9 = a * e;
     },
     
-    /*
-      The t parameter is the start timestamp (start_ts)
-      Original function:
-      jrs: function(t) {
-        for (var a = Math.floor(1e5 * Math.random() + 1e4), e = String(t * a), n = 0, o = [], m = e.length >= 18; o.length < 6;) o.push(parseInt(e.slice(n, n + 2))), n = m ? n + 3 : n + 2;
-
-        return [a, bmak.cal_dis(o)];
-      }
-    */
+    /**
+     * @param {*} t start timestamp (start_ts)
+     * @returns 
+     */
     jrs: function(t) {
-      // Generate a number between 10,000 and 110,000
+      /**
+       * Original function:     
+       *  jrs: function(t) {     
+       *      for (var a = Math.floor(1e5 * Math.random() + 1e4), e = String(t * a), n = 0, o = [], m = e.length >= 18; o.length < 6;) o.push(parseInt(e.slice(n, n + 2))), n = m ? n + 3 : n + 2;     
+       *      return [a, bmak.cal_dis(o)];     
+       *  }
+       */
+      /**
+       * Generate a number between 10,000 and 110,000
+       */
       var a = Math.floor(1e5 * Math.random() + 1e4);
-      var e = String(t * a); // start_ts * the random number stringified
+      /**
+       * start_ts * the random number stringified
+       */
+      var e = String(t * a);
       var n = 0;
       var o = [];
       var m = e.length >= 18;
@@ -1232,14 +1247,14 @@ var _cf = _cf || [],
       return [a, bmak.cal_dis(o)];
     },
     
-    /*
-      Text rendering based fingerprinting.
-      By rendering various fonts and taking note of device pixel ratio
-      we're able to build a fingerprint on the user.
-
-      On my M1 Macbook Air on Safari the fmh hash returns "4d624c99ce55b315c4f2eddf110ab32c60f386cf5ccf175f66d4b8ecaf332b09"
-      while my Windows machine returns "b89fb7541ffbbc3a0c9e37f0c9e6b56019c29c7a0c8644f8f587d8af18fc2426"
-    */
+    /**
+     * Text rendering based fingerprinting.     
+     *   By rendering various fonts and taking note of device pixel ratio
+     *   we're able to build a fingerprint on the user.
+     * 
+     *   On my M1 Macbook Air on Safari the fmh hash returns "4d624c99ce55b315c4f2eddf110ab32c60f386cf5ccf175f66d4b8ecaf332b09"
+     *   while my Windows machine returns "b89fb7541ffbbc3a0c9e37f0c9e6b56019c29c7a0c8644f8f587d8af18fc2426"
+     */
     fm: function() {
       var t = ["Monospace", "Wingdings 2", "ITC Bodoni 72 Bold", "Menlo", "Gill Sans MT", "Lucida Sans", "Bodoni 72", "Serif", "Shree Devanagari 714", "Microsoft Tai Le", "Nimbus Roman No 9 L", "Candara", "Press Start 2P", "Waseem"],
         a = document.createElement("span");
@@ -1264,21 +1279,21 @@ var _cf = _cf || [],
       bmak.fmz = "devicePixelRatio" in window && void 0 !== window.devicePixelRatio ? window.devicePixelRatio : -1;
     },
     
-    /*
-    WebGL based detections through the capturing of GPU and vendor
-    + the collection of hashed supported web extensions.
-
-    Original function:
-      wgl: function() {
-        try {
-          var t = document.createElement("canvas"),
-            a = t.getContext("webgl");
-          bmak.wv = "n", bmak.wr = "n", bmak.weh = "n", bmak.wl = 0, a && (bmak.wv = "b", bmak.wr = "b", bmak.weh = "b", a.getSupportedExtensions() && (bmak.weh = bmak.ats(bmak.mn_s(JSON.stringify(a.getSupportedExtensions().sort()))), bmak.wl = a.getSupportedExtensions().length, a.getSupportedExtensions().indexOf("WEBGL_debug_renderer_info") >= 0 && (bmak.wv = a.getParameter(a.getExtension("WEBGL_debug_renderer_info").UNMASKED_VENDOR_WEBGL), bmak.wr = a.getParameter(a.getExtension("WEBGL_debug_renderer_info").UNMASKED_RENDERER_WEBGL))));
-        } catch (t) {
-          bmak.wv = "e", bmak.wr = "e", bmak.weh = "e", bmak.wl = 0;
-        }
-      }
-    */
+    /**
+     * WebGL based detections through the capturing of GPU and vendor
+     * + the collection of hashed supported web extensions.
+     * 
+     * Original function:
+     *   wgl: function() {
+     *    try {
+     *       var t = document.createElement("canvas"),
+     *         a = t.getContext("webgl");
+     *       bmak.wv = "n", bmak.wr = "n", bmak.weh = "n", bmak.wl = 0, a && (bmak.wv = "b", bmak.wr = "b", bmak.weh = "b", a.getSupportedExtensions() && (bmak.weh = bmak.ats(bmak.mn_s(JSON.stringify(a.getSupportedExtensions().sort()))), bmak.wl = a.getSupportedExtensions().length, a.getSupportedExtensions().indexOf("WEBGL_debug_renderer_info") >= 0 && (bmak.wv = a.getParameter(a.getExtension("WEBGL_debug_renderer_info").UNMASKED_VENDOR_WEBGL), bmak.wr = a.getParameter(a.getExtension("WEBGL_debug_renderer_info").UNMASKED_RENDERER_WEBGL))));
+     *     } catch (t) {
+     *       bmak.wv = "e", bmak.wr = "e", bmak.weh = "e", bmak.wl = 0;
+     *     }
+     *   }
+     */
     wgl: function() {
       try {
         var t = document.createElement("canvas");
@@ -1317,24 +1332,24 @@ var _cf = _cf || [],
       }
     },
     
-    /*
-      Can be used to fingerprint and determine what device/browser
-      a user is using.
-
-      The voices provided in the Web Speech API is different
-      depending on the browser.
-
-      My Chrome 92 reports 67 voices while Safari reports 48.
-      The voices are also completely different with none of the
-      voiceURIs matching.
-
-      Each voice is turned into a string with the following format:
-      "voiceURI_lang" and the final string is SHA256 hashed and stored
-      in bmak.ssh.
-      
-      If no voices exist "0" is stored in bmak.ssh.
-      If speech synthesis is not available "n" is stored in bmak.ssh.
-    */
+    /**
+     * Can be used to fingerprint and determine what device/browser
+     * a user is using.
+     * 
+     * The voices provided in the Web Speech API is different
+     * depending on the browser.
+     * 
+     * My Chrome 92 reports 67 voices while Safari reports 48.
+     * The voices are also completely different with none of the
+     * voiceURIs matching.
+     * 
+     * Each voice is turned into a string with the following format:
+     * "voiceURI_lang" and the final string is SHA256 hashed and stored
+     * in bmak.ssh.
+     * 
+     * If no voices exist "0" is stored in bmak.ssh.
+     * If speech synthesis is not available "n" is stored in bmak.ssh.
+     */
     csh: function() {
       if (window.speechSynthesis) {
         var t = window.speechSynthesis.getVoices();
@@ -1347,55 +1362,55 @@ var _cf = _cf || [],
       } else bmak.ssh = "n";
     },
     
-    /*
-      Create a bit field checking for the existence of any
-      browser automation drivers
-
-      0:  window.__nightmare
-      1:  window.cdc_adoQpoasnfa76pfcZLmcfl_Array
-      2:  window.cdc_adoQpoasnfa76pfcZLmcfl_Promise
-      3:  window.cdc_adoQpoasnfa76pfcZLmcfl_Symbol
-      4:  window.OSMJIF
-      5:  window._Selenium_IDE_Recorder
-      6:  window.__$webdriverAsyncExecutor
-      7:  window.__driver_evaluate
-      8:  window.__driver_unwrapped
-      9:  window.__fxdriver_evaluate
-      10: window.__fxdriver_unwrapped
-      11: window.__lastWatirAlert
-      12: window.__lastWatirConfirm
-      13: window.__lastWatirPrompt
-      14: window.__phantomas
-      15: window.__selenium_evaluate
-      16: window.__selenium_unwrapped
-      17: window.__webdriverFuncgeb
-      18: window.__webdriver__chr
-      19: window.__webdriver_evaluate
-      20: window.__webdriver_script_fn
-      21: window.__webdriver_script_func
-      22: window.__webdriver_script_function
-      23: window.__webdriver_unwrapped
-      24: window.awesomium
-      25: window.callSelenium
-      26: window.calledPhantom
-      27: window.calledSelenium
-      28: window.domAutomationController
-      29: window.watinExpressionError
-      30: window.watinExpressionResult
-      31: window.spynner_additional_js_loaded
-      32: document.$chrome_asyncScriptInfo
-      33: window.fmget_targets
-      34: window.geb
-
-
-      Running this function on my current machine on Chrome
-      returns the number 0.
-
-      Converting these numbers to binary allows you to see which properties
-      exist and don't in your browser.
-
-      (The first bit from the left specifies whether window.geb exists and the last bit is window.__nightmare)
-    */
+    	/**
+     * Create a bit field checking for the existence of any
+     * browser automation drivers
+     * 
+     * 0:  window.__nightmare        
+     * 1:  window.cdc_adoQpoasnfa76pfcZLmcfl_Array    
+     * 2:  window.cdc_adoQpoasnfa76pfcZLmcfl_Promise    
+     * 3:  window.cdc_adoQpoasnfa76pfcZLmcfl_Symbol    
+     * 4:  window.OSMJIF    
+     * 5:  window._Selenium_IDE_Recorder    
+     * 6:  window.__$webdriverAsyncExecutor    
+     * 7:  window.__driver_evaluate    
+     * 8:  window.__driver_unwrapped    
+     * 9:  window.__fxdriver_evaluate    
+     * 10: window.__fxdriver_unwrapped    
+     * 11: window.__lastWatirAlert    
+     * 12: window.__lastWatirConfirm    
+     * 13: window.__lastWatirPrompt    
+     * 14: window.__phantomas    
+     * 15: window.__selenium_evaluate    
+     * 16: window.__selenium_unwrapped    
+     * 17: window.__webdriverFuncgeb    
+     * 18: window.__webdriver__chr    
+     * 19: window.__webdriver_evaluate    
+     * 20: window.__webdriver_script_fn    
+     * 21: window.__webdriver_script_func    
+     * 22: window.__webdriver_script_function    
+     * 23: window.__webdriver_unwrapped    
+     * 24: window.awesomium    
+     * 25: window.callSelenium    
+     * 26: window.calledPhantom    
+     * 27: window.calledSelenium    
+     * 28: window.domAutomationController    
+     * 29: window.watinExpressionError    
+     * 30: window.watinExpressionResult    
+     * 31: window.spynner_additional_js_loaded    
+     * 32: document.$chrome_asyncScriptInfo    
+     * 33: window.fmget_targets    
+     * 34: window.geb    
+     * 
+     * 
+     * Running this function on my current machine on Chrome
+     * returns the number 0.
+     * 
+     * Converting these numbers to binary allows you to see which properties
+     * exist and don't in your browser.
+     * 
+     * (The first bit from the left specifies whether window.geb exists and the last bit is window.__nightmare)
+     */
     hbs: function() {
       try {
         return Boolean(window.__nightmare) + (Boolean(window.cdc_adoQpoasnfa76pfcZLmcfl_Array) << 1) + (Boolean(window.cdc_adoQpoasnfa76pfcZLmcfl_Promise) << 2) + (Boolean(window.cdc_adoQpoasnfa76pfcZLmcfl_Symbol) << 3) + (Boolean(window.OSMJIF) << 4) + (Boolean(window._Selenium_IDE_Recorder) << 5) + (Boolean(window.__$webdriverAsyncExecutor) << 6) + (Boolean(window.__driver_evaluate) << 7) + (Boolean(window.__driver_unwrapped) << 8) + (Boolean(window.__fxdriver_evaluate) << 9) + (Boolean(window.__fxdriver_unwrapped) << 10) + (Boolean(window.__lastWatirAlert) << 11) + (Boolean(window.__lastWatirConfirm) << 12) + (Boolean(window.__lastWatirPrompt) << 13) + (Boolean(window.__phantomas) << 14) + (Boolean(window.__selenium_evaluate) << 15) + (Boolean(window.__selenium_unwrapped) << 16) + (Boolean(window.__webdriverFuncgeb) << 17) + (Boolean(window.__webdriver__chr) << 18) + (Boolean(window.__webdriver_evaluate) << 19) + (Boolean(window.__webdriver_script_fn) << 20) + (Boolean(window.__webdriver_script_func) << 21) + (Boolean(window.__webdriver_script_function) << 22) + (Boolean(window.__webdriver_unwrapped) << 23) + (Boolean(window.awesomium) << 24) + (Boolean(window.callSelenium) << 25) + (Boolean(window.calledPhantom) << 26) + (Boolean(window.calledSelenium) << 27) + (Boolean(window.domAutomationController) << 28) + (Boolean(window.watinExpressionError) << 29) + (Boolean(window.watinExpressionResult) << 30) + (Boolean(window.spynner_additional_js_loaded) << 31) + (Boolean(document.$chrome_asyncScriptInfo) << 32) + (Boolean(window.fmget_targets) << 33) + (Boolean(window.geb) << 34);
@@ -1404,16 +1419,17 @@ var _cf = _cf || [],
       }
     },
     
-    /*
-      Checks if navigator.webdriver is true.
-      https://developer.mozilla.org/en-US/docs/Web/API/Navigator/webdriver
-
-      This property is true when in:
-      Chrome
-        The --enable-automation or the --headless flag or the --remote-debugging-port is used.
-      Firefox
-        The marionette.enabled preference or --marionette flag is passed.
-    */
+    /**
+     * Checks if navigator.webdriver is true.
+     * https://developer.mozilla.org/en-US/docs/Web/API/Navigator/webdriver
+     *
+     * This property is true when in:
+     * Chrome
+     *   The --enable-automation or the --headless flag or the --remote-debugging-port is used.
+     * Firefox
+     *   The marionette.enabled preference or --marionette flag is passed.
+     * @returns 
+     */
     gwd: function() {
       try {
         return navigator.webdriver ? navigator.webdriver : -1;
@@ -1422,12 +1438,12 @@ var _cf = _cf || [],
       }
     },
     
-    /*
-      Accumulate the ascii values of each character of 
-      "name" or "id" attribute
-      (uses name if it exists, id otherwise, returns -1 if none exists)
+    /**
+      * Accumulate the ascii values of each character of 
+      * "name" or "id" attribute
+      * (uses name if it exists, id otherwise, returns -1 if none exists)
 
-      if the parameter is null it will use document.activeElement
+      * if the parameter is null it will use document.activeElement
     */
     gf: function(t) {
       var a;
