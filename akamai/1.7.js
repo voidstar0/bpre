@@ -5,6 +5,8 @@ var _cf = _cf || [],
   /**
    * @namespace bmak
    * @version 1.7
+   * @property {string} wen                     - Webdriver activated
+   * @property {string} den                     - Headless Chrome
    */
   bmak = { // Old declaration ` bmak && bmak.hasOwnProperty("ver") && bmak.hasOwnProperty("sed") ? bmak : ...`
     /**
@@ -141,6 +143,7 @@ var _cf = _cf || [],
      */
     disFpCalOnTimeout: 0,
     /**
+     * A bit field that store the window functions that exists in your browser
      * @type {number}
      */
     xagg: -1,
@@ -160,19 +163,25 @@ var _cf = _cf || [],
     /**
      * Browser build number
      * @type {string}
+     * @see https://developer.mozilla.org/en-US/docs/Web/API/Navigator/productSub
      */
     psub: "-",
     /**
      * User's browser's preferred language
      * @type {string}
+     * @see https://developer.mozilla.org/en-US/docs/Web/API/Navigator/language
      */
     lang: "-",
     /**
+     * Always 'Gecko'
      * @type {string}
+     * @see https://developer.mozilla.org/en-US/docs/Web/API/Navigator/product
      */
     prod: "-",
     /**
+     * Legacy browser plugins. Not to be confused with extensions.
      * @type {number}
+     * @see https://developer.mozilla.org/en-US/docs/Web/API/Navigator/plugins
      */
     plen: -1,
     /**
@@ -200,6 +209,10 @@ var _cf = _cf || [],
      * @type {string}
      */
     hn: "unk",
+    /**
+     * Creates a rough estimate of the hour identifier for start timestamp
+     * @type {number}
+     */
     z1: 0,
     o9: 0,
     vc: "",
@@ -507,7 +520,7 @@ var _cf = _cf || [],
          */
         k = d + "";
       
-        // ${userAgent},uaend,${functionsInBrowser},${buildNumber},${language},Gecko,${legacyPlugins}
+        // ${userAgent},uaend,${functionsInBrowser},${buildNumber},${language},Gecko,${legacyPlugins},${phantom},${webdriver},${headless},${timestampHour},${?},${screen.availWidth},${screen.availHeight},${screen.width},${screen.height},${window.innerWidth},${innerHeight},${outerWidth}, TODO: bmak.bd() + "," + a + "," + k + "," + e + "," + bmak.brv + ",loc:" + bmak.loc
       return k = k.slice(0, 11) + s, bmak.gbrv(), bmak.get_browser(), bmak.bc(), bmak.bmisc(), t + ",uaend," + bmak.xagg + "," + bmak.psub + "," + bmak.lang + "," + bmak.prod + "," + bmak.plen + "," + bmak.pen + "," + bmak.wen + "," + bmak.den + "," + bmak.z1 + "," + bmak.d3 + "," + n + "," + o + "," + m + "," + r + "," + c + "," + i + "," + b + "," + bmak.bd() + "," + a + "," + k + "," + e + "," + bmak.brv + ",loc:" + bmak.loc;
     },
     
