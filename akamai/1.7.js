@@ -828,46 +828,46 @@ var _cf = _cf || [],
       return t.push("x12:" + u), t.join(",");
     },
     
-    /*
-      Create a bit field checking for the existence of the following properties
-      0: navigator.credentials
-      1: navigator.appMinorVersion
-      2: navigator.bluetooth
-      3: navigator.storage
-      4: Math.imul
-      5: navigator.getGamepads
-      6: navigator.getStorageUpdates
-      7: navigator.getStorageUpdates
-      8: navigator.hardwareConcurrency
-      9: navigator.mediaDevices
-      10: navigator.mozAlarms
-      11: navigator.mozConnection
-      12: navigator.mozIsLocallyAvailable
-      13: navigator.mozPhoneNumberService
-      14: navigator.msManipulationViewsEnabled
-      15: navigator.permissions
-      16: navigator.registerProtocolHandler
-      17: navigator.requestMediaKeySystemAccess
-      18: navigator.requestWakeLock
-      19: navigator.sendBeacon
-      20: navigator.serviceWorker
-      21: navigator.storeWebWideTrackingException
-      22: navigator.webkitGetGamepads
-      23: navigator.webkitTemporaryStorage
-      24: Number.parseInt
-      25: Math.hypot
+    /**
+     * Create a bit field checking for the existence of the following properties     
+     *  0: navigator.credentials     
+     *  1: navigator.appMinorVersion     
+     *  2: navigator.bluetooth     
+     *  3: navigator.storage     
+     *  4: Math.imul     
+     *  5: navigator.getGamepads     
+     *  6: navigator.getStorageUpdates     
+     *  7: navigator.getStorageUpdates     
+     *  8: navigator.hardwareConcurrency     
+     *  9: navigator.mediaDevices     
+     *  10: navigator.mozAlarms     
+     *  11: navigator.mozConnection     
+     *  12: navigator.mozIsLocallyAvailable     
+     *  13: navigator.mozPhoneNumberService     
+     *  14: navigator.msManipulationViewsEnabled          
+     *  15: navigator.permissions     
+     *  16: navigator.registerProtocolHandler     
+     *  17: navigator.requestMediaKeySystemAccess     
+     *  18: navigator.requestWakeLock     
+     *  19: navigator.sendBeacon     
+     *  20: navigator.serviceWorker     
+     *  21: navigator.storeWebWideTrackingException     
+     *  22: navigator.webkitGetGamepads     
+     *  23: navigator.webkitTemporaryStorage     
+     *  24: Number.parseInt     
+     *  25: Math.hypot     
 
-      Running this function on my current machine on Chrome
-      returns the number 30261693 while on Safari returns 26018161
+     *  Running this function on my current machine on Chrome     
+     *  returns the number 30261693 while on Safari returns 26018161     
 
-      Converting these numbers to binary allows you to see which properties
-      exist and don't in your browser.
-
-      (The first bit from the left specifies whether Math.hypot exists and the last bit is navigator.credentials)
-      30261693: 1 1 1 0 0 1 1 0 1 1 1 0 0 0 0 0 1 1 0 1 1 1 1 0 1
-      26018161: 1 1 0 0 0 1 1 0 1 0 0 0 0 0 0 0 1 0 1 1 1 0 0 0 1
-
-    */
+     *  Converting these numbers to binary allows you to see which properties     
+     *  exist and don't in your browser.     
+     *  
+     *  (The first bit from the left specifies whether Math.hypot exists and the last bit is navigator.credentials)     
+     *  30261693: 1 1 1 0 0 1 1 0 1 1 1 0 0 0 0 0 1 1 0 1 1 1 1 0 1     
+     *  26018161: 1 1 0 0 0 1 1 0 1 0 0 0 0 0 0 0 1 0 1 1 1 0 0 0 1     
+     * @returns {number} bit field
+     */
     fas: function() {
       try {
         return Boolean(navigator.credentials) + (Boolean(navigator.appMinorVersion) << 1) + (Boolean(navigator.bluetooth) << 2) + (Boolean(navigator.storage) << 3) + (Boolean(Math.imul) << 4) + (Boolean(navigator.getGamepads) << 5) + (Boolean(navigator.getStorageUpdates) << 6) + (Boolean(navigator.hardwareConcurrency) << 7) + (Boolean(navigator.mediaDevices) << 8) + (Boolean(navigator.mozAlarms) << 9) + (Boolean(navigator.mozConnection) << 10) + (Boolean(navigator.mozIsLocallyAvailable) << 11) + (Boolean(navigator.mozPhoneNumberService) << 12) + (Boolean(navigator.msManipulationViewsEnabled) << 13) + (Boolean(navigator.permissions) << 14) + (Boolean(navigator.registerProtocolHandler) << 15) + (Boolean(navigator.requestMediaKeySystemAccess) << 16) + (Boolean(navigator.requestWakeLock) << 17) + (Boolean(navigator.sendBeacon) << 18) + (Boolean(navigator.serviceWorker) << 19) + (Boolean(navigator.storeWebWideTrackingException) << 20) + (Boolean(navigator.webkitGetGamepads) << 21) + (Boolean(navigator.webkitTemporaryStorage) << 22) + (Boolean(Number.parseInt) << 23) + (Boolean(Math.hypot) << 24);
@@ -876,10 +876,11 @@ var _cf = _cf || [],
       }
     },
     
-    /*
-    This function gets an average of performance metrics by
-    running various Math and JSON functions several times.
-    */
+    /**
+     * This function gets an average of performance metrics by
+     * running various Math and JSON functions several times.
+     * @returns 
+     */
     getmr: function() {
       try {
         if ("undefined" == typeof performance || void 0 === performance.now || "undefined" == typeof JSON) return void(bmak.mr = "undef");
@@ -912,49 +913,69 @@ var _cf = _cf || [],
       }
     },
     
-    /*
-      Checks for a series of properties that only exist while using
-      browser driver automation libraries. 
-
-      see: https://themerkle.com/selenium-java-how-to-avoid-bot-detection-by-websites-when-using-chromedriver-exe/
-      see: https://stackoverflow.com/a/24965280
-    */
+    /**
+     * Checks for a series of properties that only exist while using
+     * browser driver automation libraries.      
+     * 
+     * default values to avoid being detected as a bot     
+     * return "0,0,0,0,1,0,0"
+     * @see https://themerkle.com/selenium-java-how-to-avoid-bot-detection-by-websites-when-using-chromedriver-exe/
+     * @see https://stackoverflow.com/a/24965280
+     * @returns 
+     */
     sed: function() {
+      /**
+       * Property that exists when using chromedriver
+       * @property {string}
+       */
       var t;
-      // Property that exists when using chromedriver
       t = window.$cdc_asdjflasutopfhvcZLmcfl_ || document.$cdc_asdjflasutopfhvcZLmcfl_ ? "1" : "0";
+      /**
+       * Selenium webdriver
+       * @property {string}
+       */
       var a;
-      // Selenium webdriver
       a = null != window.document.documentElement.getAttribute("webdriver") ? "1" : "0";
+      /**
+       * Selenium webdriver
+       * @property {string}
+       */
       var e;
-      // Selenium webdriver
       e = void 0 !== navigator.webdriver && navigator.webdriver ? "1" : "0";
+      /**
+       * Selenium webdriver
+       * @property {string}
+       */
       var n;
-      // Selenium webdriver
       n = void 0 !== window.webdriver ? "1" : "0";
       var o;
       o = void 0 !== window.XPathResult || void 0 !== document.XPathResult ? "1" : "0";
+      /**
+       * Selenium webdriver
+       * @property {string}
+       */
       var m;
-      // Selenium webdriver
       m = null != window.document.documentElement.getAttribute("driver") ? "1" : "0";
+      /**
+       * Selenium webdriver
+       * @property {string}
+       */
       var r;
-      // Selenium webdriver
       return r = null != window.document.documentElement.getAttribute("selenium") ? "1" : "0", [t, a, e, n, o, m, r].join(",");
-
-      // default values to avoid being detected as a bot
-      // return "0,0,0,0,1,0,0"
     },
     
-    /*
-      Mouse events.
-
-      This function gets triggered on:
-      
-      hmm: "mousemove", "onmousemove" (a = 1)
-      hc: "click", "onclick" (a = 2)
-      hmd: "mousedown", "onmousedown" (a = 3)
-      hmu: "mouseup", "onmouseup" (a = 4)
-    */
+    /**
+     * Mouse events.
+     * 
+     *  This function gets triggered on:
+     *  
+     *  hmm: "mousemove", "onmousemove" (a = 1)
+     *  hc: "click", "onclick" (a = 2)
+     *  hmd: "mousedown", "onmousedown" (a = 3)
+     *  hmu: "mouseup", "onmouseup" (a = 4)
+     * @param {event} t @see https://dom.spec.whatwg.org/#concept-event
+     * @param {number} a 
+     */
     cma: function(t, a) {
       try {
         
@@ -964,6 +985,10 @@ var _cf = _cf || [],
           OR any click/mousedown/mouseup events and the event count is less than the mouse click event limit (75)
         */
         if (1 == a && bmak.mme_cnt < bmak.mme_cnt_lmt || 1 != a && bmak.mduce_cnt < bmak.mduce_cnt_lmt) {
+          /**
+           * The event triggered
+           * @see https://dom.spec.whatwg.org/#concept-event
+           */
           var e = t || window.event,
             n = -1,
             o = -1;
@@ -989,12 +1014,13 @@ var _cf = _cf || [],
       } catch (t) {}
     },
     
-    /*
-      Another one of Akamai's obfuscated ways of
-      return current timestamp in milliseconds.
+    /**
+     * Another one of Akamai's obfuscated ways of
+     *  return current timestamp in milliseconds.
 
-      It calls bmak.get_cf_date which returns Date.now()
-    */
+     *  It calls bmak.get_cf_date which returns Date.now()
+     * @returns {number}
+     */
     x2: function() {
         // bmak.ff = String.fromCharCode
         var t = bmak.ff,
@@ -1007,28 +1033,28 @@ var _cf = _cf || [],
       return "function" == typeof n && (o = n()), o;
     },
     
-    /*
-      Queries a bunch of permissions and maps into an array that
-      states whether the permission was
-      prompted (1)
-      granted (2)
-      denied (0)
-      invalid permission name (4)
-      Other error (3)
-
-      The array is then joined together to become a stringified number.
-
-      On my Chrome this function sets bmak.nav_perm to 
-      "11321144241322243122" but if navigator.permissions 
-      does not exist like on Safari nav_perm is set to 6
-
-      If the function fails for another reason then nav_perm
-      is set to 7
-
-      This can be used as a browser & fingerprinting check because:
-      -  Permissions don't exist on safari
-      -  Different browser's / users will have different permission configurations
-    */
+    /**
+     * Queries a bunch of permissions and maps into an array that states whether the permission was:    
+     *  - prompted (1)    
+     *  - granted (2)    
+     *  - denied (0)    
+     *  - invalid permission name (4)    
+     *  - Other error (3)    
+     * 
+     *  The array is then joined together to become a stringified number.
+     * 
+     *  On my Chrome this function sets bmak.nav_perm to 
+     *  "11321144241322243122" but if navigator.permissions 
+     *  does not exist like on Safari nav_perm is set to 6.
+     * 
+     *  If the function fails for another reason then nav_perm
+     *  is set to 7
+     * 
+     *  This can be used as a browser & fingerprinting check because:    
+     *  -  Permissions don't exist on safari    
+     *  -  Different browser's / users will have different permission configurations
+     * @returns 
+     */
     np: function() {
       var t = [],
         a = ["geolocation", "notifications", "push", "midi", "camera", "microphone", "speaker", "device-info", "background-sync", "bluetooth", "persistent-storage", "ambient-light-sensor", "accelerometer", "gyroscope", "magnetometer", "clipboard", "accessibility-events", "clipboard-read", "clipboard-write", "payment-handler"];
@@ -1073,16 +1099,18 @@ var _cf = _cf || [],
       }
     },
     
-    /*
-      This function handles pointer events.
-      Pointer events can be triggered by pen/stylus
-      or touch devices (see: https://developer.mozilla.org/en-US/docs/Web/API/Pointer_events)
-
-      The events that trigger this function:
-
-      hpd: "pointerdown", "onpointerdown" (a = 3)
-      hpu: "pointerup", "onpointerup" (a = 4)
-    */
+    /**
+     * This function handles pointer events.
+     * Pointer events can be triggered by pen/stylus
+     *  or touch devices (see: https://developer.mozilla.org/en-US/docs/Web/API/Pointer_events)
+     * 
+     *  The events that trigger this function:
+     * 
+     *  hpd: "pointerdown", "onpointerdown" (a = 3)
+     *  hpu: "pointerup", "onpointerup" (a = 4)
+     * @param {event} t 
+     * @param {number} a 
+     */
     cpa: function(t, a) {
       try {
         var e = !1;
@@ -1112,21 +1140,23 @@ var _cf = _cf || [],
       } catch (t) {}
     },
     
-    /*
-      Takes in a string as a parameter
-      Iterates over the string
-      and returns an accumulator of the
-      character codes less than 128
-      (non-extended ASCII codes)
-
-      Example:
-        bmak.ab("a")   // 97
-        bmak.ab("b")   // 98
-        bmak.ab("c")   // 99
-        bmak.ab("abc") // 294 (97 + 98 + 99)
-
-      https://www.rapidtables.com/code/text/ascii-table.html
-    */
+    /**
+     * Takes in a string as a parameter
+     *  Iterates over the string
+     *  and returns an accumulator of the
+     *  character codes less than 128
+     *  (non-extended ASCII codes)
+     * 
+     *  Example:     
+     *   -  bmak.ab("a")   // 97     
+     *   -  bmak.ab("b")   // 98     
+     *   -  bmak.ab("c")   // 99     
+     *   -  bmak.ab("abc") // 294 (97 + 98 + 99)
+     * 
+     * @see https://www.rapidtables.com/code/text/ascii-table.html
+     * @param {*} t 
+     * @returns 
+     */
     ab: function(t) {
       if (null == t) return -1;
 
