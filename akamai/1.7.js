@@ -5,146 +5,200 @@ var _cf = _cf || [],
   /**
    * @namespace bmak
    * @version 1.7
-   * @property {number} ver                     - Akamai version, e.g: 1.7
-   * @property {number} ke_cnt_lmt              - Max keyboard event limit
-   * @property {number} mme_cnt_lmt             - Max mouse move event limit
-   * @property {number} mduce_cnt_lmt           - Max mouse down/up event limit
-   * @property {number} pme_cnt_lmt             - 
-   * @property {number} pduce_cnt_lmt           - Max pointer event limit
-   * @property {number} tme_cnt_lmt             - Touch move event limit
-   * @property {number} doe_cnt_lmt             - Device orientation event limit
-   * @property {number} dme_cnt_lmt             - Device motion event limit
-   * @property {number} vc_cnt_lmt              - Visibility change count limit
-   * @property {number} doa_throttle
-   * @property {number} dma_throttle
-   * @property {string} session_id
-   * @property {boolean | number} js_post
-   * @property {string} loc
-   * @property {string} cf_url
-   * @property {string} params_url
-   * @property {string} auth
-   * @property {string} api_public_key
-   * @property {number} aj_lmt_doact
-   * @property {number} aj_lmt_dmact
-   * @property {number} aj_lmt_tact
-   * @property {number} ce_js_post
-   * @property {number} init_time
-   * @property {string} informinfo
-   * @property {number} prevfid
-   * @property {number} fidcnt
-   * @property sensor_data
-   * @property ins
-   * @property cns
-   * @property {number} enGetLoc
-   * @property {number} enReadDocUrl
-   * @property {number} disFpCalOnTimeout
-   * @property {number} xagg
-   * @property {number} pen                     - Phantom https://phantomjs.org/ has been detected, check bmisc()
-   * @property {string} brow
-   * @property {string} browver
-   * @property {string} psub                    - Browser build number
-   * @property {string} lang                    - User's browser's preferred language
-   * @property {string} prod
-   * @property {number} plen
-   * @property {number} doadma_en
-   * @property sdfn
-   * @property {number} d2
-   * @property {number} d3
-   * @property {number} thr
-   * @property {string} cs
-   * @property {string} hn
-   * @property {number} z1
-   * @property {number} o9
-   * @property vc
-   * @property {number} y1
-   * @property {number} ta
-   * @property {number} tst
-   * @property {number} t_tst
-   * @property {string} ckie                    -  
-   * @property n_ck
-   * @property {number} ckurl
-   * @property bm
-   * @property {string} mr
-   * @property altFonts
-   * @property rst
-   * @property runFonts
-   * @property fsp
-   * @property firstLoad
-   * @property pstate
-   * @property {number} mn_mc_lmt
-   * @property {number} mn_state
-   * @property {number} mn_mc_indx
-   * @property {number} mn_sen
-   * @property {number} mn_tout
-   * @property {number} mn_stout
-   * @property {number} mn_ct
-   * @property {string} mn_cc
-   * @property {number} mn_cd
-   * @property mn_lc
-   * @property mn_ld
-   * @property {number} mn_lcl
-   * @property mn_al
-   * @property mn_il
-   * @property mn_tcl
-   * @property mn_r
-   * @property {number} mn_rt
-   * @property {number} mn_wt
-   * @property {string} mn_abck
-   * @property {string} mn_psn
-   * @property {string} mn_ts
-   * @property mn_lg
-   * @property {number} loap
-   * @property {number} dcs
    */
   bmak = { // Old declaration ` bmak && bmak.hasOwnProperty("ver") && bmak.hasOwnProperty("sed") ? bmak : ...`
+    /**
+     * Akamai version, e.g: 1.7
+     * @type {number}
+     */
     ver: 1.7,
+    /**
+     * Max keyboard event limit
+     * @type {number} ke_cnt_lmt
+     */
     ke_cnt_lmt: 150,
+    /**
+     * Max mouse move event limit
+     * @type {number}
+     */
     mme_cnt_lmt: 100,
+    /**
+     * Max mouse down/up event limit
+     * @type {number}
+     */
     mduce_cnt_lmt: 75,
+    /**
+     * @type {number}
+     */
     pme_cnt_lmt: 25,
+    /**
+     * Max pointer event limit
+     * @type {number}
+     */
     pduce_cnt_lmt: 25,
+    /**
+     * Touch move event limit
+     * @type {number}
+     */
     tme_cnt_lmt: 25,
     tduce_cnt_lmt: 25,
+    /**
+     * Device orientation event limit
+     * @type {number}
+     */
     doe_cnt_lmt: 10,
+    /**
+     * Device motion event limit
+     * @type {number}
+     */
     dme_cnt_lmt: 10,
+    /**
+     * Visibility change count limit
+     * @type {number}
+     */
     vc_cnt_lmt: 100,
+    /**
+     * @type {number}
+     */
     doa_throttle: 0, 
+    /**
+     * @type {number}
+     */
     dma_throttle: 0,
+    /**
+     * @type {string}
+     */
     session_id: "default_session",
     js_post: !1,
+    /**
+     * @type {string}
+     */
     loc: "",
+    /**
+     * @type {string}
+     */
     cf_url: "https:" === document.location.protocol ? "https://" : "http://",
+    /**
+     * @type {string}
+     */
     params_url: ("https:" === document.location.protocol ? "https://" : "http://") + document.location.hostname + "/get_params",
+    /**
+     * @type {string}
+     */
     auth: "",
+    /**
+     * @type {string}
+     */
     api_public_key: "afSbep8yjnZUjq3aL010jO15Sawj2VZfdYK8uY90uxq",
+    /**
+     * @type {number}
+     */
     aj_lmt_doact: 1,
+    /**
+     * @type {number}
+     */
     aj_lmt_dmact: 1,
+    /**
+     * @type {number}
+     */
     aj_lmt_tact: 1,
+    /**
+     * @type {number}
+     */
     ce_js_post: 0,
+    /**
+     * @type {number}
+     */
     init_time: 0,
+    /**
+     * @type {string}
+     */
     informinfo: "",
+    /**
+     * @type {number}
+     */
     prevfid: -1,
+    /**
+     * @type {number}
+     */
     fidcnt: 0,
+    /**
+     * @type {number}
+     */
     sensor_data: 0,
     ins: null,
     cns: null,
+    /**
+     * @type {number}
+     */
     enGetLoc: 0,
+    /**
+     * @type {number}
+     */
     enReadDocUrl: 1,
+    /**
+     * @type {number}
+     */
     disFpCalOnTimeout: 0,
+    /**
+     * @type {number}
+     */
     xagg: -1,
+    /**
+     * Phantom https://phantomjs.org/ has been detected, check bmisc()
+     * @type {number}
+     */
     pen: -1,
+    /**
+     * @type {string}
+     */
     brow: "",
+    /**
+     * @type {string}
+     */
     browver: "",
+    /**
+     * Browser build number
+     * @type {string}
+     */
     psub: "-",
+    /**
+     * User's browser's preferred language
+     * @type {string}
+     */
     lang: "-",
+    /**
+     * @type {string}
+     */
     prod: "-",
+    /**
+     * @type {number}
+     */
     plen: -1,
+    /**
+     * @type {number}
+     */
     doadma_en: 0,
     sdfn: [],
+    /**
+     * @type {number}
+     */
     d2: 0,
+    /**
+     * @type {number}
+     */
     d3: 0,
+    /**
+     * @type {number}
+     */
     thr: 0,
+    /**
+     * @type {string}
+     */
     cs: "0a46G5m17Vrp4o4c",
+    /**
+     * @type {string}
+     */
     hn: "unk",
     z1: 0,
     o9: 0,
@@ -153,10 +207,25 @@ var _cf = _cf || [],
     ta: 0,
     tst: -1,
     t_tst: 0,
+    /**
+     * @type {string}
+     */
     ckie: "_abck",
+    /**
+     * @type {string}
+     */
     n_ck: "0",
+    /**
+     * @type {number}
+     */
     ckurl: 0,
+    /**
+     * @type {number}
+     */
     bm: !1,
+    /**
+     * @type {string}
+     */
     mr: "-1",
     altFonts: !1,
     rst: !1,
@@ -164,13 +233,37 @@ var _cf = _cf || [],
     fsp: !1,
     firstLoad: !0,
     pstate: !1,
+    /**
+     * @type {number}
+     */
     mn_mc_lmt: 10,
+    /**
+     * @type {number}
+     */
     mn_state: 0,
+    /**
+     * @type {number}
+     */
     mn_mc_indx: 0,
+    /**
+     * @type {number}
+     */
     mn_sen: 0,
+    /**
+     * @type {number}
+     */
     mn_tout: 100,
+    /**
+     * @type {number}
+     */
     mn_stout: 1e3,
+    /**
+     * @type {number}
+     */
     mn_ct: 1,
+    /**
+     * @type {string}
+     */
     mn_cc: "",
     mn_cd: 1e4,
     mn_lc: [],
@@ -182,8 +275,17 @@ var _cf = _cf || [],
     mn_r: [],
     mn_rt: 0,
     mn_wt: 0,
+    /**
+     * @type {string}
+     */
     mn_abck: "",
+    /**
+     * @type {string}
+     */
     mn_psn: "",
+    /**
+     * @type {string}
+     */
     mn_ts: "",
     mn_lg: [],
     loap: 1,
@@ -405,7 +507,7 @@ var _cf = _cf || [],
          */
         k = d + "";
       
-        // ${userAgent},uaend,${functionsInBrowser},${buildNumber},${language},
+        // ${userAgent},uaend,${functionsInBrowser},${buildNumber},${language},Gecko,${legacyPlugins}
       return k = k.slice(0, 11) + s, bmak.gbrv(), bmak.get_browser(), bmak.bc(), bmak.bmisc(), t + ",uaend," + bmak.xagg + "," + bmak.psub + "," + bmak.lang + "," + bmak.prod + "," + bmak.plen + "," + bmak.pen + "," + bmak.wen + "," + bmak.den + "," + bmak.z1 + "," + bmak.d3 + "," + n + "," + o + "," + m + "," + r + "," + c + "," + i + "," + b + "," + bmak.bd() + "," + a + "," + k + "," + e + "," + bmak.brv + ",loc:" + bmak.loc;
     },
     
@@ -438,20 +540,24 @@ var _cf = _cf || [],
         bmak.lang = navigator.language
       }
 
-      // All browsers return "Gecko" for compatibility reasons.
       if (navigator.product) {
+        /**
+         * All browsers return "Gecko" for compatibility reasons.
+         * @see https://developer.mozilla.org/en-US/docs/Web/API/Navigator/product
+         */
         bmak.prod = navigator.product
       }
 
-      // Legacy browser plugins. Not to be confused with extensions.
-      // https://developer.mozilla.org/en-US/docs/Web/API/Navigator/plugins
       if (navigator.plugins !== undefined) {
+        /**
+         * Legacy browser plugins. Not to be confused with extensions.
+         * @see https://developer.mozilla.org/en-US/docs/Web/API/Navigator/plugins
+         */
         bmak.plen = navigator.plugins.length;
       } else {
         bmak.plen = -1;
       }
     },
-    
     
     /**
      * 
