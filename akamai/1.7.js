@@ -7,6 +7,7 @@ var _cf = _cf || [],
    * @version 1.7
    * @property {string} wen                     - Webdriver activated
    * @property {string} den                     - Headless Chrome
+   * @property {number} brv                     - Brave
    */
   bmak = { // Old declaration ` bmak && bmak.hasOwnProperty("ver") && bmak.hasOwnProperty("sed") ? bmak : ...`
     /**
@@ -526,12 +527,20 @@ var _cf = _cf || [],
     
     /*
 
-    Original Function:
-      get_browser: function() {
-        navigator.productSub && (bmak.psub = navigator.productSub), navigator.language && (bmak.lang = navigator.language), navigator.product && (bmak.prod = navigator.product), bmak.plen = void 0 !== navigator.plugins ? navigator.plugins.length : -1;
-      }
+    
     */
+    /**
+     * Get browser identity
+     * @see {@link bmak.psub} {@link bmak.lang} {@link bmak.prod} {@link bmak.plen}
+     */
     get_browser: function() {
+      /**
+       * Original Function:
+       * get_browser: function() {
+       *   navigator.productSub && (bmak.psub = navigator.productSub), navigator.language && (bmak.lang = navigator.language), navigator.product && (bmak.prod = navigator.product), bmak.plen = void 0 !== navigator.plugins ? navigator.plugins.length : -1;
+       * }
+       */
+
       if (navigator.productSub) {
         /**
        * Browser build number
@@ -578,11 +587,9 @@ var _cf = _cf || [],
      * The navigator.brave property only exists on
      * Brave browsers.
      *
-     * Brave is a Chromium basedprivacy browser that 
-     * blocks trackers and enables some privacy settings.
-     *
      * They can potentially use this check to loosen
      * fingerprinting requirements if Brave is detected.
+     * @see https://en.wikipedia.org/wiki/Brave_(web_browser)
      */
     gbrv: function() {
       navigator.brave && navigator.brave.isBrave().then(function(t) {
@@ -592,63 +599,104 @@ var _cf = _cf || [],
       });
     },
     
-    /*
-      Function crafts a bit field that determines whether
-      various window functions exist.
+    /**
+     * Function crafts a bit field that determines whether
+     * various window functions exist.
+     * 
+     *  0:  window.addEventListener     
+     *  1:  window.XMLHttpRequest     
+     *  2:  window.XDomainRequest     
+     *  3:  window.emit     
+     *  4:  window.DeviceOrientationEvent     
+     *  5:  window.DeviceMotionEvent     
+     *  6:  window.TouchEvent     
+     *  7:  window.spawn     
+     *  8:  window.innerWidth     
+     *  9:  window.outerWidth     
+     *  10: window.chrome     
+     *  11: Function.prototype.bind     
+     *  12: window.Buffer     
+     *  13: window.PointerEvent     
+     * 
+     *  Running this in my Chrome 91 returns 12147 while Safari returns 11011.     
+     *  Converting these to binary allow us to see which properties do and don't exist on these browsers.
+     * 
+     *  The 4th bit from the left represents window.chrome and we can see      
+     *  Chrome returns true (1) while Safari is false (0)
 
-      0:  window.addEventListener
-      1:  window.XMLHttpRequest
-      2:  window.XDomainRequest
-      3:  window.emit
-      4:  window.DeviceOrientationEvent
-      5:  window.DeviceMotionEvent
-      6:  window.TouchEvent
-      7:  window.spawn
-      8:  window.innerWidth
-      9:  window.outerWidth
-      10: window.chrome
-      11: Function.prototype.bind
-      12: window.Buffer
-      13: window.PointerEvent
-
-      Running this in my Chrome 91 returns 12147 whiile Safari returns 11011.
-      Converting these to binary allow us to see which properties do and don't exist on these browsers.
-
-      The 4th bit from the left represents window.chrome and we can see 
-      Chrome returns true (1) while Safari is false (0)
-
-      12147: 1 0 1 1 1 1 0 1 1 1 0 0 1 1
-      11011: 1 0 1 0 1 1 0 0 0 0 0 0 1 1
-
-    */
+     *  12147: 1 0 1 1 1 1 0 1 1 1 0 0 1 1     
+     *  11011: 1 0 1 0 1 1 0 0 0 0 0 0 1 1
+     */
     bc: function() {
+      /**
+       * addEventListener available
+       */
       var t = window.addEventListener ? 1 : 0,
+        /**
+         * XMLHttpRequest available
+         */
         a = window.XMLHttpRequest ? 1 : 0,
-        // Only exists for Internet Explorer
+        /**
+         * XDomainRequest available    
+         * Only exists for Internet Explorer 
+         */
         e = window.XDomainRequest ? 1 : 0,
+        /**
+         * emit available    
+         */
         n = window.emit ? 1 : 0,
-        // Not supported on Safari and IE
+        /**
+         * DeviceOrientationEvent available    
+         * Not supported on Safari and IE
+         */
         o = window.DeviceOrientationEvent ? 1 : 0,
-        // Not supported on Safari and IE
+        /**
+         * DeviceMotionEvent available    
+         * Not supported on Safari and IE
+         */
         m = window.DeviceMotionEvent ? 1 : 0,
-        // Not supported on Safari and IE
+        /**
+         * TouchEvent available    
+         * Not supported on Safari and IE
+         */
         r = window.TouchEvent ? 1 : 0,
-        // Doesnt exist in browsers. Maybe used as a check to see if its running in a Node environment.
+        /**
+         * spawn available    
+         * Doesnt exist in browsers. Maybe used as a check to see if its running in a Node environment.
+         */
         i = window.spawn ? 1 : 0,
-        // Check to see if running in Chrome
+        /**
+         * chrome available    
+         * Check to see if running in Chrome
+         */
         c = window.chrome ? 1 : 0,
+        /**
+         * Function.prototype.bind available    
+         */
         b = Function.prototype.bind ? 1 : 0,
-        // Doesnt exist in browsers. Maybe used as a check to see if its running in a Node environment (global.Buffer).
+        /**
+         * Buffer available    
+         * Doesnt exist in browsers. Maybe used as a check to see if its running in a Node environment (global.Buffer).
+         */
         d = window.Buffer ? 1 : 0,
+        /**
+         * PointerEvent available    
+         */
         s = window.PointerEvent ? 1 : 0;
 
       try {
+        /**
+         * Window Inner Width    
+         */
         var k = window.innerWidth ? 1 : 0;
       } catch (t) {
         var k = 0;
       }
 
       try {
+        /**
+         * Window Outer Width    
+         */
         var l = window.outerWidth ? 1 : 0;
       } catch (t) {
         var l = 0;
@@ -657,10 +705,10 @@ var _cf = _cf || [],
       bmak.xagg = t + (a << 1) + (e << 2) + (n << 3) + (o << 4) + (m << 5) + (r << 6) + (i << 7) + (k << 8) + (l << 9) + (c << 10) + (b << 11) + (d << 12) + (s << 13);
     },
     
-    /*
-      Check for browser driver automation:
-      https://www.selenium.dev/selenium
-    */
+    /**
+     * Check for browser driver automation
+     * @see https://stackoverflow.com/a/24471222
+     */
     bmisc: function() {
       // _phantom https://phantomjs.org/
       bmak.pen = window._phantom ? 1 : 0;
@@ -676,35 +724,68 @@ var _cf = _cf || [],
       // Headless chrome property
       bmak.den = window.domAutomation ? 1 : 0;
     },
+
+    /**
+     * Functions check for various Window and Navigator properties
+     * @returns {string} Every properties separated by a comma (,)
+     */
     bd: function() {
+      /**
+       * The array that will serve as the return string
+       */
       var t = [],
-      // Check for callback function for phantomJS (https://phantomjs.org/api/webpage/handler/on-callback.html)
+      /**
+       * Has callback function for phantomJS (https://phantomjs.org/api/webpage/handler/on-callback.html)
+       */
       a = window.callPhantom ? 1 : 0;
       t.push(",cpen:" + a);
       var e = 0;
-      // "The ActiveXObject object is used to create instances of OLE Automation objects in Internet Explorer on Windows operating systems."
-      // http://help.dottoro.com/ljiujjib.php#:~:text=The%20ActiveXObject%20object%20is%20used,to%20allow%20communication%20with%20them.
+      /**
+       * "The ActiveXObject object is used to create instances of OLE Automation objects in Internet Explorer on Windows operating systems."
+       * @see http://help.dottoro.com/ljiujjib.php#:~:text=The%20ActiveXObject%20object%20is%20used,to%20allow%20communication%20with%20them
+       */
       window.ActiveXObject && "ActiveXObject" in window && (e = 1), t.push("i1:" + e);
-      // Property only exists on IE. Prob an IE check 
+      /**
+       * Property only exists on IE. Prob an IE check
+       */ 
       var n = "number" == typeof document.documentMode ? 1 : 0;
       t.push("dm:" + n);
-      // Chrome check
+      /**
+       * Chrome check
+       */
       var o = window.chrome && window.chrome.webstore ? 1 : 0;
       t.push("cwen:" + o);
-      // Returns the online status of the browser. The property returns a boolean value, with true meaning online and false meaning offline
+      /**
+       * Returns the online status of the browser. The property returns a boolean value, with true meaning online and false meaning offline
+       */
       var m = navigator.onLine ? 1 : 0;
       t.push("non:" + m);
-      // Opera browser check
+      /**
+       * Opera browser check
+       */
       var r = window.opera ? 1 : 0;
       t.push("opc:" + r);
-      // Firefox check. InstallTrigger only exists on firefox and typeof InstallTrigger will return "object" on firefox based browsers. "undefined" otherwise
+      /**
+       * Firefox check. InstallTrigger only exists on firefox and typeof InstallTrigger will return "object" on firefox based browsers. "undefined" otherwise
+       */
       var i = "undefined" != typeof InstallTrigger ? 1 : 0;
       t.push("fc:" + i);
-      // Early safari check (https://stackoverflow.com/questions/15470777/what-does-this-statement-object-prototype-do)
+      /**
+       * Early safari check
+       * @see https://stackoverflow.com/questions/15470777/what-does-this-statement-object-prototype-do
+       */
       var c = window.HTMLElement && Object.prototype.toString.call(window.HTMLElement).indexOf("Constructor") > 0 ? 1 : 0;
       t.push("sc:" + c);
+      /**
+       * WebRTC check
+       * @see https://developer.mozilla.org/en-US/docs/Web/API/RTCPeerConnection
+       */
       var b = "function" == typeof window.RTCPeerConnection || "function" == typeof window.mozRTCPeerConnection || "function" == typeof window.webkitRTCPeerConnection ? 1 : 0;
       t.push("wrc:" + b);
+      /**
+       * Firefox check as it's only available in Firefox.
+       * @see https://developer.mozilla.org/en-US/docs/Web/API/Window/mozInnerScreenY
+       */
       var d = "mozInnerScreenY" in window ? window.mozInnerScreenY : 0;
       t.push("isc:" + d);
       
@@ -721,12 +802,28 @@ var _cf = _cf || [],
         see: https://github.com/char/bpre/issues/1#issuecomment-914575546
       */
       bmak.d2 = bmak.pi(bmak.z1 / 23);
+      /**
+       * Mobile check, only available in Chromium and Firefox
+       * @see https://developer.mozilla.org/en-US/docs/Web/API/Navigator/vibrate
+       */
       var s = "function" == typeof navigator.vibrate ? 1 : 0;
       t.push("vib:" + s);
+      /**
+      * Mobile check, only available in Chromium and Opera
+      * @see https://developer.mozilla.org/en-US/docs/Web/API/Navigator/getBattery
+      */
       var k = "function" == typeof navigator.getBattery ? 1 : 0;
       t.push("bat:" + k);
+      /**
+       * JS check, some browsers don't support this function
+       * @see https://caniuse.com/?search=forEach
+       */
       var l = Array.prototype.forEach ? 0 : 1;
       t.push("x11:" + l);
+      /**
+       * JS check, some browsers don't support this function
+       * @see https://caniuse.com/?search=FileReader
+       */
       var u = "FileReader" in window ? 1 : 0;
       return t.push("x12:" + u), t.join(",");
     },
