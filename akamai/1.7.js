@@ -3,7 +3,8 @@
 */
 var _cf = _cf || [],
   /**
-   * @namespace
+   * @namespace bmak
+   * @version 1.7
    * @property {number} ver                     - Akamai version, e.g: 1.7
    * @property {number} ke_cnt_lmt              - Max keyboard event limit
    * @property {number} mme_cnt_lmt             - Max mouse move event limit
@@ -41,8 +42,8 @@ var _cf = _cf || [],
    * @property {number} pen                     - Phantom https://phantomjs.org/ has been detected, check bmisc()
    * @property {string} brow
    * @property {string} browver
-   * @property {string} psub
-   * @property {string} lang
+   * @property {string} psub                    - Browser build number
+   * @property {string} lang                    - User's browser's preferred language
    * @property {string} prod
    * @property {number} plen
    * @property {number} doadma_en
@@ -95,7 +96,7 @@ var _cf = _cf || [],
    * @property {number} loap
    * @property {number} dcs
    */
-  bmak = bmak && bmak.hasOwnProperty("ver") && bmak.hasOwnProperty("sed") ? bmak : {
+  bmak = { // Old declaration ` bmak && bmak.hasOwnProperty("ver") && bmak.hasOwnProperty("sed") ? bmak : ...`
     ver: 1.7,
     ke_cnt_lmt: 150,
     mme_cnt_lmt: 100,
@@ -267,46 +268,92 @@ var _cf = _cf || [],
     /**
      * Returns the User-Agent of the current browser window 
      * https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/User-Agent
+     * @method uar
+     * @memberof bmak
      * @returns {string} a User-Agent string stripped from every \\|" string, e.g: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/14.1.2 Safari/605.1.15
      */
     uar: function() {
       return window.navigator.userAgent.replace(/\\|"/g, "");
     },
 
+    /**
+     * Get some window properties values
+     * Difference between inner/outer/classic sizes https://stackoverflow.com/a/17845094/12440368
+     * @method gd
+     * @memberof bmak
+     * @namespace bmak.gd
+     * @returns 
+     */
     gd: function() {
-      var t = bmak.uar(), // user agent
-        a = "" + bmak.ab(t), // Accumulate all char codes in the user agent and return number
-        e = bmak.start_ts / 2, // Start time / 2
+      /**
+       * Store User-Agent
+       * @type {string}
+       */
+      var t = bmak.uar(),
+        /**
+         * Accumulate all char codes in the user agent and store it in {a}
+         * @type {string}
+         */
+        a = "" + bmak.ab(t),
+        /**
+         * Current timestamp divided by 2
+         * @type {number}
+         */
+        e = bmak.start_ts / 2, 
+        /**
+         * Store the available width
+         * @type {number}
+         */
         n = -1,
+        /**
+         * Store the available height
+         * @type {number}
+         */
         o = -1,
+        /**
+         * Store the screen width
+         * @type {number}
+         */
         m = -1,
+        /**
+         * Store the screen height
+         * @type {number}
+         */
         r = -1,
+        /**
+         * Store the window inner height
+         * @type {number}
+         */
         i = -1,
+        /**
+         * Store the window inner width
+         * @type {number}
+         */
         c = -1,
+        /**
+         * Store the window outer width
+         * @type {number}
+         */
         b = -1;
 
-      // Gets the available width
       try {
         n = window.screen ? window.screen.availWidth : -1;
       } catch (t) {
         n = -1;
       }
 
-      // Gets the available height
       try {
         o = window.screen ? window.screen.availHeight : -1;
       } catch (t) {
         o = -1;
       }
 
-      // Get screen width
       try {
         m = window.screen ? window.screen.width : -1;
       } catch (t) {
         m = -1;
       }
 
-      // Get screen height
       try {
         r = window.screen ? window.screen.height : -1;
       } catch (t) {
@@ -332,23 +379,33 @@ var _cf = _cf || [],
       }
 
       
-      /*
-        parseInt(start timestamp / 4064256)
-        
-        Creates a rough estimate of the hour identifier for start timestamp(bmak.start_ts).
-
-        "dividing by 4064256 and parsing as an int gives you a number that should be constant for all valid sensor datas, 
-        but changes every ~hour (4064256ms is 67 minutes 44.256 seconds, 
-        not sure why this wouldnt be exactly 60 min but close enough i guess)"
-        - xssc
-
-        see: https://github.com/char/bpre/issues/1#issuecomment-914575546
-      */
-      bmak.z1 = bmak.pi(bmak.start_ts / (bmak.y1 * bmak.y1));
-      var d = Math.random(), // number between 0 and 1 
-        s = bmak.pi(1e3 * d / 2), // 0 < s < 499 because: 1000 * (nb between 0-1) / 2
-        k = d + ""; // d.toString()
+      /**
+       * @description Creates a rough estimate of the hour identifier for start timestamp(bmak.start_ts).
+       * "dividing by 4064256 and parsing as an int gives you a number that should be constant for all valid sensor datas, 
+       * but changes every ~hour (4064256ms is 67 minutes 44.256 seconds, 
+       * not sure why this wouldnt be exactly 60 min but close enough i guess)"
+       * @author xssc <https://github.com/xssc>
+       * see: https://github.com/char/bpre/issues/1#issuecomment-914575546
+       */
+      bmak.z1 = bmak.pi(bmak.start_ts / (bmak.y1 * bmak.y1)); // parseInt(start timestamp / 4064256) 
+      /**
+       * Number between 0 and 1
+       * @type {number}
+       */
+      var d = Math.random(),
+        /**
+         * Number between 0 and 499
+         * 0 < s < 499 because: 1000 * (nb between 0-1) / 2
+         * @type {number}
+         */
+        s = bmak.pi(1e3 * d / 2),
+        /**
+         * A string representing a number between 0 and 1
+         * @type {string}
+         */
+        k = d + "";
       
+        // ${userAgent},uaend,${functionsInBrowser},${buildNumber},${language},
       return k = k.slice(0, 11) + s, bmak.gbrv(), bmak.get_browser(), bmak.bc(), bmak.bmisc(), t + ",uaend," + bmak.xagg + "," + bmak.psub + "," + bmak.lang + "," + bmak.prod + "," + bmak.plen + "," + bmak.pen + "," + bmak.wen + "," + bmak.den + "," + bmak.z1 + "," + bmak.d3 + "," + n + "," + o + "," + m + "," + r + "," + c + "," + i + "," + b + "," + bmak.bd() + "," + a + "," + k + "," + e + "," + bmak.brv + ",loc:" + bmak.loc;
     },
     
@@ -360,16 +417,24 @@ var _cf = _cf || [],
       }
     */
     get_browser: function() {
-      // Safari and Chrome will always return "20030107"
-      // Firefox returns "20100101" and this doesn't exist on IE
       if (navigator.productSub) {
+        /**
+       * Browser build number
+       * Safari and Chrome will always return "20030107"
+       * Firefox returns "20100101" and this doesn't exist on IE
+       * @see https://developer.mozilla.org/en-US/docs/Web/API/Navigator/productSub
+       */
         bmak.psub = navigator.productSub
       }
 
-      // User's browser's preferred language. This can be represented
-      // differently depending on the browser. For example,
-      // English is stylized as en-US in Chrome but en-us in Safari
       if(navigator.language) {
+        /**
+         * User's browser's preferred language. 
+         * This can be represented
+         * differently depending on the browser. For example,
+         * English is stylized as en-US in Chrome but en-us in Safari
+         * @see https://developer.mozilla.org/en-US/docs/Web/API/Navigator/language
+         */
         bmak.lang = navigator.language
       }
 
