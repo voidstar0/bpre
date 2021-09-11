@@ -3,7 +3,7 @@
 */
 var _cf = _cf || [],
   /**
-   * @namespace bmak
+   * @namespace
    * @version 1.7
    * @property {string} wen                     - Webdriver activated
    * @property {string} den                     - Headless Chrome
@@ -131,14 +131,28 @@ var _cf = _cf || [],
      * - "-1,2,-94,-101": Device properties
      * - "-1,2,-94,-105": Current form properties
      * - "-1,2,-94,-102": Current form properties 2 (same method as above)
-     * - "-1,2,-94,-108": ? TODO:
-     * - "-1,2,-94,-108":
-     * - "-1,2,-94,-110":
-     * - "-1,2,-94,-117":
-     * - "-1,2,-94,-111":
-     * - "-1,2,-94,-109":
-     * - "-1,2,-94,-114":
-     * - "-1,2,-94,-103": 
+     * - "-1,2,-94,-108": 'Press' events
+     * - "-1,2,-94,-110": 'Mouse' events
+     * - "-1,2,-94,-117": 'Touch' events
+     * - "-1,2,-94,-111": TODO:
+     * - "-1,2,-94,-109": 'DeviceMotion' events
+     * - "-1,2,-94,-114": 'Pointer' events
+     * - "-1,2,-94,-103": 'Visibility' events
+     * - "-1,2,-94,-112": Document URL {@link bmak.getdurl}
+     * - "-1,2,-94,-115": TODO:
+     * - "-1,2,-94,-106": TODO:
+     * - "-1,2,-94,-119": TODO:
+     * - "-1,2,-94,-122": Web driver properties {@link bmak.sed}
+     * - "-1,2,-94,-123": TODO:
+     * - "-1,2,-94,-124": TODO:
+     * - "-1,2,-94,-126": TODO:
+     * - "-1,2,-94,-127": Navigation permission {@link bmak.np}
+     * - "-1,2,-94,-70": TODO:
+     * - "-1,2,-94,-80": TODO: 
+     * - "-1,2,-94,-116": TODO:
+     * - "-1,2,-94,-118": Accumulator of sensor data {@link bmak.ab}
+     * - "-1,2,-94,-129": TODO:
+     * - "-1,2,-94,-121": TODO:
      * @type {number}
      */
     sensor_data: 0,
@@ -325,12 +339,17 @@ var _cf = _cf || [],
     dcs: 0,
     
     /**
-     * Initialize / Reset variables.
+     * @method
+     * @description Initialize / Reset variables.
      * One of the first functions to get called.
      * Also gets called in get_telemetry
      */
     ir: function() {
       bmak.start_ts = Date.now ? Date.now() : +new Date();
+      /**
+       * Each "press" event listed one by one, defined in {@link bmak.cka}.
+       * @type {string}
+       */
       bmak.kact = "";
       bmak.ke_cnt = 0;
       bmak.ke_vel = 0;
@@ -1514,27 +1533,81 @@ var _cf = _cf || [],
      * "keydown", "onkeydown", (a = 1)
      * "keyup", "onkeyup", (a = 2)
      * "keypress", "onkeypress" (a = 3)
+     * @param {event} t
+     * @param {number} a
      */
     cka: function(t, a) {
       try {
         var e = t || window.event,
+          /**
+           * Event key code
+           * @type {number}
+           * @see https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/keyCode
+           */
           n = -1,
           o = 1;
 
         if (bmak.ke_cnt < bmak.ke_cnt_lmt && e) {
           n = e.keyCode;
+          /**
+           * Event char code
+           * @type {string} Unicode char
+           * @deprecated in most browsers
+           * @see https://developer.mozilla.org/fr/docs/Web/API/KeyboardEvent/charCode
+           */
           var m = e.charCode,
+            /**
+             * Event: if shiftKey was pressed
+             * @type {number}
+             * @see https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/shiftKey
+             */
             r = e.shiftKey ? 1 : 0,
+            /**
+             * Event: if ctrlKey was pressed
+             * @type {number}
+             * @see https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/ctrlKey
+             */
             i = e.ctrlKey ? 1 : 0,
+            /**
+             * Event: if metaKey was pressed
+             * @type {number}
+             * @see https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/metaKey
+             */
             c = e.metaKey ? 1 : 0,
+            /**
+             * Event: if altKey was pressed
+             * @type {number}
+             * @see https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/altKey
+             */
             b = e.altKey ? 1 : 0,
+            /**
+             * Combinaison of pressed keys
+             * - d = 15: every keys pressed
+             * - d = 14: shiftKey + ctrlKey + metaKey
+             * - d = 13: shiftKey + ctrlKey + altKey
+             * - d = 12: shiftKey + ctrlKey
+             * ... do your maths
+             * @type {number}
+             */
             d = 8 * r + 4 * i + 2 * c + b,
+            /**
+             * Difference between the start of the script timestamp
+             * and the current timestamp
+             * @type {number}
+             */
             s = bmak.get_cf_date() - bmak.start_ts,
+            /**
+             * ASCII values of each "id" "name" attributes
+             */
             k = bmak.gf(null),
             l = 0;
           m && n && (n = 0 != m && 0 != n && m != n ? -1 : 0 != n ? n : m), 0 == i && 0 == c && 0 == b && n >= 32 && (n = 3 == a && n >= 32 && n <= 126 ? -2 : n >= 33 && n <= 47 ? -3 : n >= 112 && n <= 123 ? -4 : -2), k != bmak.prevfid ? (bmak.fidcnt = 0, bmak.prevfid = k) : bmak.fidcnt = bmak.fidcnt + 1;
 
           if (0 == bmak.isIgn(n)) {
+            /**
+             * 
+             * ${Count number of press events},${eventType},${timestamp},${eventKeyCode},0,${Combinaison of pressed size},${ASCII combinaison}
+             */
             var u = bmak.ke_cnt + "," + a + "," + s + "," + n + "," + l + "," + d + "," + k;
             void 0 !== e.isTrusted && !1 === e.isTrusted && (u += ",0"), u += ";", bmak.kact = bmak.kact + u, bmak.ke_vel = bmak.ke_vel + bmak.ke_cnt + a + s + n + d + k, bmak.ta += s;
           } else o = 0;
@@ -1603,6 +1676,11 @@ var _cf = _cf || [],
       } catch (t) {}
     },
 
+    /**
+     * Device Motion Event
+     * @param {event} t 
+     * @see https://developer.mozilla.org/fr/docs/Web/API/DeviceMotionEvent/rotationRate
+     */
     cdma: function(t) {
       try {
         if (bmak.dme_cnt < bmak.dme_cnt_lmt && bmak.dma_throttle < 2 && t) {
@@ -1967,7 +2045,8 @@ var _cf = _cf || [],
     
     /**
      * Triggered on visibility change.
-     * @param {*} t 
+     * @param {event} t 
+     * @see https://developer.mozilla.org/en-US/docs/Web/API/Document/visibilitychange_event
      */
     lvc: function(t) {
       try {
