@@ -126,6 +126,19 @@ var _cf = _cf || [],
      */
     fidcnt: 0,
     /**
+     * @description The data sent to the server-side. It is divided in multiple parts:      
+     * - "-1,2,-94,-100": Browser, Navigator and Windows properties      
+     * - "-1,2,-94,-101": Device properties
+     * - "-1,2,-94,-105": Current form properties
+     * - "-1,2,-94,-102": Current form properties 2 (same method as above)
+     * - "-1,2,-94,-108": ? TODO:
+     * - "-1,2,-94,-108":
+     * - "-1,2,-94,-110":
+     * - "-1,2,-94,-117":
+     * - "-1,2,-94,-111":
+     * - "-1,2,-94,-109":
+     * - "-1,2,-94,-114":
+     * - "-1,2,-94,-103": 
      * @type {number}
      */
     sensor_data: 0,
@@ -189,6 +202,12 @@ var _cf = _cf || [],
      * @type {number}
      */
     doadma_en: 0,
+    /**
+     * SD Field names    
+     * Possibily related to SAP
+     * @type {string[]}
+     * @see https://answers.sap.com/questions/4149198/sd-field-names-and-tables.html
+     */
     sdfn: [],
     /**
      * @type {number}
@@ -394,11 +413,12 @@ var _cf = _cf || [],
 
     /**
      * Get some window properties values
-     * Difference between inner/outer/classic sizes https://stackoverflow.com/a/17845094/12440368
+     * Difference between inner/outer/classic sizes https://stackoverflow.com/a/17845094/12440368       
+     * It is the first part of the sensor data [-1,2,-94,-100]
      * @method gd
      * @memberof bmak
      * @namespace bmak.gd
-     * @returns 
+     * @returns {string} ${userAgent},uaend,${functionsInBrowser},${buildNumber},${language},Gecko,${legacyPlugins},${phantom},${webdriver},${headless},${timestampHour},${?},${screen.availWidth},${screen.availHeight},${screen.width},${screen.height},${window.innerWidth},${innerHeight},${outerWidth},${windows&navigator},${charsUA},${nbBetween01},${timestamp/2},${isBrave},loc:${empty}
      */
     gd: function() {
       /**
@@ -502,6 +522,7 @@ var _cf = _cf || [],
        * not sure why this wouldnt be exactly 60 min but close enough i guess)"
        * @author xssc <https://github.com/xssc>
        * see: https://github.com/char/bpre/issues/1#issuecomment-914575546
+       * @returns ${userAgent},uaend,${functionsInBrowser},${buildNumber},${language},Gecko,${legacyPlugins},${phantom},${webdriver},${headless},${timestampHour},${?},${screen.availWidth},${screen.availHeight},${screen.width},${screen.height},${window.innerWidth},${innerHeight},${outerWidth},${windows&navigator},${charsUA},${nbBetween01},${timestamp/2},${isBrave},loc:${empty}
        */
       bmak.z1 = bmak.pi(bmak.start_ts / (bmak.y1 * bmak.y1)); // parseInt(start timestamp / 4064256) 
       /**
@@ -520,8 +541,6 @@ var _cf = _cf || [],
          * @type {string}
          */
         k = d + "";
-      
-        // ${userAgent},uaend,${functionsInBrowser},${buildNumber},${language},Gecko,${legacyPlugins},${phantom},${webdriver},${headless},${timestampHour},${?},${screen.availWidth},${screen.availHeight},${screen.width},${screen.height},${window.innerWidth},${innerHeight},${outerWidth}, TODO: bmak.bd() + "," + a + "," + k + "," + e + "," + bmak.brv + ",loc:" + bmak.loc
       return k = k.slice(0, 11) + s, bmak.gbrv(), bmak.get_browser(), bmak.bc(), bmak.bmisc(), t + ",uaend," + bmak.xagg + "," + bmak.psub + "," + bmak.lang + "," + bmak.prod + "," + bmak.plen + "," + bmak.pen + "," + bmak.wen + "," + bmak.den + "," + bmak.z1 + "," + bmak.d3 + "," + n + "," + o + "," + m + "," + r + "," + c + "," + i + "," + b + "," + bmak.bd() + "," + a + "," + k + "," + e + "," + bmak.brv + ",loc:" + bmak.loc;
     },
     
